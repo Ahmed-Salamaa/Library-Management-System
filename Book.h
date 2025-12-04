@@ -1,16 +1,13 @@
 #ifndef FILE_BOOK
 #define FILE_BOOK
 
-#include <iostream>
-#include <string>
-using namespace std;
-
 #include "System.h"
 
 class Book 
 {
     private:
 
+        static LinkedList < Book * > BookTable ;
         static int ID_START ;
 
         const int id ;
@@ -20,18 +17,40 @@ class Book
 
     public:
 
-        Book ( int id , const string & title , const string & author )
-            : id ( id ) , quantity ( quantity ) , title ( title ) , author ( author )  
+        static Book * getPointer ( int id ) { return BookTable.search( id ) ; }
+        static Book * getPointer ( string title ) { return BookTable.search( title ) ; }
+
+        static void deleteBook ( Book * ptr )
         {
-            if ( !System::system_started() )
-                throw runtime_error( "You cant Create a User with an setted id after system runs" ) ;
+            if ( !ptr ) throw runtime_error( "Cannot delete Book: Invalid reference") ;
+
+            BookTable.erase( ptr ) ;
         }
 
-        Book ( int id , const string & title , const string & author )
+        static void deleteBook ( int id )
+        {
+            Book * ptr ;
+
+            if ( ptr ) deleteBook( ptr ) ;
+            else throw runtime_error( "Cannot delete Book: No Book found with ID " + to_string(id) ) ;
+        }
+
+        Book ( int id , int quantity , const string & title , const string & author )
+            : id ( id ) , quantity ( quantity ) , title ( title ) , author ( author )  
+        {
+            if ( System::systemStarted() )
+                throw runtime_error( "You cant Create a User with an setted id after system runs" ) ;
+
+            BookTable.insert( this ) ;
+        }
+
+        Book ( int id , int quantity , const string & title , const string & author )
             : id ( ++ ID_START ) , quantity ( quantity ) , title ( title ) , author ( author )  
         {
-            if ( !System::system_started() )
+            if ( !System::systemStarted() )
                 throw runtime_error( "You cant Create a User before system runs" ) ;
+        
+            BookTable.insert( this ) ;
         }
 
 
@@ -45,7 +64,7 @@ class Book
 
 };
 
-int Book::ID_START = 1'000'000 ;
+
 
 
 #endif
