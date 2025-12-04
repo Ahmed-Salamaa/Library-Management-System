@@ -6,7 +6,12 @@ class LinkedList
 {
     public :
 
-        void insert ( t ) ;
+        void insert ( t obj ) ;
+        t search ( int id ) ;
+        t search ( string name ) ;
+
+        void erase ( t obj ) ;
+        void erase ( int id ) ;
 } ;
 
 #endif
