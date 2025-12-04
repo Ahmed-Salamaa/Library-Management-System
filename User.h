@@ -57,6 +57,14 @@ class User
             UserTable.insert( this ) ;
         }
 
+        bool operator == ( const User & rhs ) { return id == rhs.id ; }
+        bool operator != ( const User & rhs ) { return id != rhs.id ; }
+
+        bool operator == ( const int & rhs ) { return id == rhs ; }
+        bool operator != ( const int & rhs ) { return id != rhs ; }
+
+        bool operator == ( const string & rhs ) { return username == rhs ; }
+        bool operator != ( const string & rhs ) { return username != rhs ; }
 
         int getId () const { return id ; }
 
