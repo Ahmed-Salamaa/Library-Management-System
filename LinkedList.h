@@ -1,8 +1,9 @@
 #ifndef FILE_LINKED_LIST
 #define FILE_LINKED_LIST
 
+#include <vector>
 #include <string>
-using std::string;
+using namespace std;
 
 template <typename t>
 class LinkedList
@@ -19,12 +20,27 @@ private:
         bool operator==(const node &rhs) { return data == rhs.data; }
         bool operator!=(const node &rhs) { return data != rhs.data; }
     };
-
     node *head;
     int size;
 
 public:
     LinkedList() : head(nullptr), size(0) {}
+    
+    std::vector<t> searchAllByPredicate(std::function<bool(const t &)> condition)
+    {
+        std::vector<t> result;
+        node *curr = head;
+
+        while (curr != nullptr)
+        {
+            if (condition(curr->data))
+                result.push_back(curr->data);
+
+            curr = curr->next;
+        }
+
+        return result;
+    }
 
     void insert(t obj)
     {
@@ -36,11 +52,8 @@ public:
         }
         else
         {
-            node *curr = head;
-            while (curr->next != nullptr)
-                curr = curr->next;
-
-            curr->next = newNode;
+            newNode->next = head;
+            head = newNode;
         }
 
         size++;
@@ -73,7 +86,7 @@ public:
 
         while (curr != nullptr)
         {
-            if (curr->data.getTitle() == name)
+            if (curr == name)
                 return curr->data;
 
             curr = curr->next;
@@ -115,7 +128,7 @@ public:
 
     void erase(int id)
     {
-        t obj = search(id); 
+        t obj = search(id);
         erase(obj);
     }
 };
