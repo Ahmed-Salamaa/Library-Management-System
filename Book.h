@@ -53,6 +53,14 @@ class Book
             BookTable.insert( this ) ;
         }
 
+        bool operator == ( const Book & rhs ) { return id == rhs.id ; }
+        bool operator != ( const Book & rhs ) { return id != rhs.id ; }
+
+        bool operator == ( const int & rhs ) { return id == rhs ; }
+        bool operator != ( const int & rhs ) { return id != rhs ; }
+
+        bool operator == ( const string & rhs ) { return title == rhs ; }
+        bool operator != ( const string & rhs ) { return title != rhs ; }
 
         int getId() const { return id ; }
         

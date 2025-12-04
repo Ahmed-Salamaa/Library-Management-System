@@ -20,7 +20,6 @@ class Borrow
     public :
 
         static Borrow * getPointer ( int id ) { return BorrowTable.search( id ) ; }
-        static Borrow * getPointer ( string title ) { return BorrowTable.search( title ) ; }
 
         Borrow ( int id , int UserId , int BookId , Date borrowDate , Date returnDate , bool status )
             : id ( id ) , UserId ( UserId ) , BookId ( BookId ) 
@@ -51,6 +50,12 @@ class Borrow
 
             BorrowTable.insert( this ) ;
         }
+
+        bool operator == ( const Borrow & rhs ) { return id == rhs.id ; }
+        bool operator != ( const Borrow & rhs ) { return id != rhs.id ; }
+
+        bool operator == ( const int & rhs ) { return id == rhs ; }
+        bool operator != ( const int & rhs ) { return id != rhs ; }
 
         int getId () const { return id ; }
         int getUserId () const { return UserId ; }
