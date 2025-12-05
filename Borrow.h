@@ -6,7 +6,6 @@ using namespace std;
 
 #include "System.h"
 #include "Book.h"
-#include "Date.h"
 
 class Borrow
 {
@@ -69,6 +68,7 @@ public:
         BorrowTable.insert(this);
     }
 
+<<<<<<< Updated upstream
     // Initializes a Borrow object with an auto-generated ID and default return date of 3 days (used during runtime).
     // @param UserId: The ID of the user borrowing the book.
     // @param BookId: The ID of the book being borrowed.
@@ -90,6 +90,20 @@ public:
             throw runtime_error("You cant Create a Borrow object before system runs");
 
         BorrowTable.insert(this);
+=======
+    friend ostream &operator<<(ostream &out, const Borrow &obj)
+    {
+        string menuName = "Borrow Info";
+        const vector<pair<string, string>> menu =
+            {
+                {"Book Title", Book::getPointer(obj.BookId)->getTitle()},
+                {"User Name", User::getPointer(obj.UserId)->getName()},
+                {"Status", to_string(obj.status)}};
+
+        Utilities::printData(menuName, menu, out);
+
+        return out;
+>>>>>>> Stashed changes
     }
 
     // Retrieves the unique identifier of this borrow record.
@@ -137,19 +151,26 @@ public:
         return BorrowTable.searchAllByPredicate(condition);
     }
 
+<<<<<<< Updated upstream
     bool hasAbookToReturn(int UserId)
+=======
+    // Checks if a user has any books that need to be returned.
+    // @param UserId: The ID of the user to check.
+    // @return: True if the user has at least one active borrow record, false otherwise.
+    int bookToReturn(int UserId)
+>>>>>>> Stashed changes
     {
         vector<Borrow *> historyOfBorrowsForAUser = searchAll(System::currPtr->getId());
-        bool hasAbook = false;
+        int bookId = -1;
         for (auto &&i : historyOfBorrowsForAUser)
         {
             if (i->getStatus() == true)
             {
-                hasAbook = true;
+                bookId = i->getBookId();
                 break;
             }
         }
-        return hasAbook;
+        return bookId;
     }
     // before using this function we need to use hasAbookToReturn if the returned value of the function
     // true we use this function if no then we can not use it
@@ -162,6 +183,7 @@ public:
             if (i->getBookId() == BookId)
             {
                 i->setStatus(false);
+                Book::updateBookData(BookId);
                 return;
             }
         }
@@ -178,6 +200,21 @@ public:
         catch (runtime_error &e)
         {
             throw runtime_error("The book is not available right now for borrow");
+        }
+    }
+
+    void returnBook(int userId)
+    {
+
+        int bookId = bookToReturn(userId);
+        if (bookId == -1)
+        {
+            throw runtime_error("No active borrowed books found for this user.");
+            return;
+        }
+        else
+        {
+            changeStatusOfBookForRutern(bookId);
         }
     }
 };

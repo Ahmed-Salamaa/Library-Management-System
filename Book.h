@@ -136,6 +136,43 @@ class Book
         }
     }
 
+        static void updateBookData(int BookId){
+            auto bookPtr = BookTable.search([&](Book* obj){
+                return obj->getId() == BookId;
+            });
+            if (!bookPtr) {
+                cout << "Book not found!" << endl;
+                return;
+            }
+            cout<<"Which data do you want to update?:\n1. Title\n2. Author\n3. Quantity\n";
+            int choice;
+            cin>>choice;
+            if(choice==1){
+                cout<<"Enter new title: ";
+                string newTitle;
+                cin.ignore();
+                getline(cin,newTitle);
+                bookPtr->setTitle(newTitle);
+            }
+            else if(choice==2){
+                cout<<"Enter new author: ";
+                string newAuthor;
+                cin.ignore();
+                getline(cin,newAuthor);
+                bookPtr->setAuthor(newAuthor);
+            }
+            else if(choice==3){
+                cout<<"Enter new quantity: ";
+                int newQuantity;
+                cin>>newQuantity;
+                bookPtr->quantity=newQuantity;
+            }
+            else{
+                cout<<"Invalid choice!"<<endl;
+            }
+        }
+
+
 };
 
 
