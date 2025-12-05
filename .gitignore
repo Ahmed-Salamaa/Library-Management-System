@@ -2,3 +2,5 @@
 /output/
 /.VSCodeCounter/
 *.exe
+ForTest*
+/ForTest/
