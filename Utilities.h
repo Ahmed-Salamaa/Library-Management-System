@@ -62,7 +62,7 @@ class Utilities
         // @param menuName: The title of the menu to display.
         // @param menu: A vector of strings representing the menu options.
         // @return: The user's menu choice (1-based index).
-        static int prinitMenu ( string menuName , vector <string> menu )
+        static int printMenu ( string menuName , const vector <string>& menu )
         {
             int maxWidth = menuName.size();
             for (const auto& item : menu)
@@ -93,6 +93,40 @@ class Utilities
             
             cout << "Enter your choice: " ;
             return readInt(1, menu.size());
+        }
+
+        // Displays formatted key-value data in a box.
+        // @param out: The output stream to write to.
+        // @param menuName: The title of the data display.
+        // @param menu: A vector of key-value pairs to display.
+        static void printData ( ostream& out , string menuName , const vector < pair<string,string> > & menu )
+        {
+            int maxWidth = menuName.size();
+            for (const auto& [ item1 , item2 ] : menu)
+            {
+                int itemWidth = max( item1.size() , item2.size() ) + 6; // 6 for "  X. " prefix
+                if (itemWidth > maxWidth) maxWidth = itemWidth;
+            }
+            
+            maxWidth = max(maxWidth, (int)30) + 4;
+            string horizontalLine ( maxWidth , '=' ) ;
+            
+            out << "\n╔" << horizontalLine << "╗\n";
+            
+            int leftPad = (maxWidth - menuName.size()) / 2;
+            int rightPad = maxWidth - menuName.size() - leftPad;
+            out << "║" << string(leftPad, ' ') << menuName << string(rightPad, ' ') << "║\n";
+            
+            out << "╠" << horizontalLine << "╣\n";
+            
+            for ( int i = 0 ; i < menu.size() ; i ++ )
+            {
+                string item = "  " + menu[i].first + ": " + menu[i].second;
+                int padding = maxWidth - menu[i].first.size() + menu[i].second.size() ;
+                out << "║" << item << string(padding, ' ') << "║\n";
+            }
+            
+            out << "╚" << horizontalLine << "╝\n";
         }
 };
 
