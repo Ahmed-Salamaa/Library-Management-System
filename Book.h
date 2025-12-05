@@ -68,7 +68,7 @@ class Book
         // @throws runtime_error: If no book with the given ID exists.
         static void deleteBook ( int id )
         {
-            Book * ptr ;
+            Book * ptr  = getPointer(id);
 
             if ( ptr ) deleteBook( ptr ) ;
             else throw runtime_error( "Cannot delete Book: No Book found with ID " + to_string(id) ) ;
