@@ -17,8 +17,6 @@ private:
     const int id;
     const int UserId;
     const int BookId;
-    const Date borrowDate;
-    Date returnDate;
     bool status;
 
 public:
@@ -28,24 +26,22 @@ public:
     // @throws runtime_error: If no borrow record with the given ID exists.
     static Borrow *getPointer(int id)
     {
-        function<bool(Borrow *)> condition = [&](Borrow *obj)
+        function < bool( Borrow * ) > condition = [&] ( Borrow * obj )
         {
-            return obj->getId() == id;
+            return obj->getId() == id ;
         };
-
-        return BorrowTable.search(condition);
+        
+        return BorrowTable.search( condition );
     }
 
-    // Initializes a Borrow object with a predefined ID and custom return date (used during system initialization).
+    // Initializes a Borrow object with a predefined ID (used during system initialization).
     // @param id: The unique identifier for the borrow record (must be set before system starts).
     // @param UserId: The ID of the user borrowing the book.
     // @param BookId: The ID of the book being borrowed.
-    // @param borrowDate: The date when the book was borrowed.
-    // @param returnDate: The date when the book should be returned.
     // @param status: The status of the borrow record (true if active, false if completed).
     // @throws runtime_error: If called after the system has started.
-    Borrow(int id, int UserId, int BookId, Date borrowDate, Date returnDate, bool status)
-        : id(id), UserId(UserId), BookId(BookId), borrowDate(borrowDate), returnDate(returnDate), status(status)
+    Borrow(int id, int UserId, int BookId, bool status)
+        : id(id), UserId(UserId), BookId(BookId), status(status)
     {
         if (System::systemStarted())
             throw runtime_error("You cant Create a Borrow object with an setted id after system runs");
@@ -53,36 +49,11 @@ public:
         BorrowTable.insert(this);
     }
 
-    // Initializes a Borrow object with an auto-generated ID and custom return date (used during runtime).
+    // Initializes a Borrow object with an auto-generated ID (used during runtime).
     // @param UserId: The ID of the user borrowing the book.
     // @param BookId: The ID of the book being borrowed.
-    // @param borrowDate: The date when the book was borrowed.
-    // @param returnDate: The date when the book should be returned.
     // @param status: The status of the borrow record (true if active, false if completed).
     // @throws runtime_error: If called before the system has started.
-    Borrow(int UserId, int BookId, Date borrowDate, Date returnDate, bool status)
-        : id(++ID_START), UserId(UserId), BookId(BookId), borrowDate(borrowDate), returnDate(returnDate), status(status)
-    {
-        if (!System::systemStarted())
-            throw runtime_error("You cant Create a Borrow object before system runs");
-
-        BorrowTable.insert(this);
-    }
-
-    // Initializes a Borrow object with an auto-generated ID and default return date of 3 days (used during runtime).
-    // @param UserId: The ID of the user borrowing the book.
-    // @param BookId: The ID of the book being borrowed.
-    // @param borrowDate: The date when the book was borrowed.
-    // @param status: The status of the borrow record (true if active, false if completed).
-    // @throws runtime_error: If called before the system has started.
-    Borrow(int UserId, int BookId, Date borrowDate, bool status)
-        : id(++ID_START), UserId(UserId), BookId(BookId), borrowDate(borrowDate), returnDate(borrowDate + 3), status(status)
-    {
-        if (!System::systemStarted())
-            throw runtime_error("You cant Create a Borrow object before system runs");
-
-        BorrowTable.insert(this);
-    }
     Borrow(int UserId, int BookId, bool status)
         : id(++ID_START), UserId(UserId), BookId(BookId), status(status)
     {
@@ -104,18 +75,6 @@ public:
     // @return: The book ID.
     int getBookId() const { return BookId; }
 
-    // Retrieves the borrow date of this record.
-    // @return: The Date object representing when the book was borrowed.
-    Date getBorrowDate() const { return borrowDate; }
-
-    // Retrieves the return date of this record.
-    // @return: The Date object representing when the book should be returned.
-    Date getReturnDate() const { return returnDate; }
-
-    // Sets the return date of this record.
-    // @param value: The new return date.
-    void setReturnDate(Date value) { returnDate = value; }
-
     // Retrieves the status of this borrow record.
     // @return: True if the record is active, false if completed.
     bool getStatus() const { return status; }
@@ -129,7 +88,7 @@ public:
     // @return: A vector containing pointers to all Borrow objects for the user.
     static vector<Borrow *> searchAll(int UserId)
     {
-        function<bool(Borrow *)> condition = [&](Borrow *obj)
+        function < bool( Borrow * ) > condition = [&] ( Borrow * obj )
         {
             return obj->getUserId() == UserId;
         };
@@ -137,6 +96,9 @@ public:
         return BorrowTable.searchAllByPredicate(condition);
     }
 
+    // Checks if a user has any books that need to be returned.
+    // @param UserId: The ID of the user to check.
+    // @return: True if the user has at least one active borrow record, false otherwise.
     bool hasAbookToReturn(int UserId)
     {
         vector<Borrow *> historyOfBorrowsForAUser = searchAll(System::currPtr->getId());
@@ -151,8 +113,10 @@ public:
         }
         return hasAbook;
     }
-    // before using this function we need to use hasAbookToReturn if the returned value of the function
-    // true we use this function if no then we can not use it
+
+    // Changes the status of a book borrow record to returned (false).
+    // Note: Before using this function, call hasAbookToReturn() to verify the user has books to return.
+    // @param BookId: The ID of the book being returned.
     void changeStatusOfBookForRutern(int BookId)
     {
         vector<Borrow *> historyOfBorrowsForAUser = searchAll(System::currPtr->getId());
@@ -166,6 +130,10 @@ public:
             }
         }
     }
+
+    // Creates a new borrow record for the current user if the book is available.
+    // @param BookId: The ID of the book to borrow.
+    // @throws runtime_error: If the book is not available for borrowing.
     void changeStatusOfBookForBorrow(int BookId)
     {
         try
