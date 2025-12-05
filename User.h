@@ -28,7 +28,7 @@ class User
 
         // Retrieves a pointer to a User object by its ID.
         // @param id: The ID of the user to search for.
-        // @return: A pointer to the User object if found, or nullptr otherwise.
+        // @return A pointer to the User object if found, or nullptr otherwise.
         // @throws runtime_error: If no user with the given ID exists.
         static User *getPointer(int id)
         {
@@ -42,7 +42,7 @@ class User
 
         // Retrieves a pointer to a User object by their username.
         // @param Username: The username to search for.
-        // @return: A pointer to the User object if found, or nullptr otherwise.
+        // @return A pointer to the User object if found, or nullptr otherwise.
         // @throws runtime_error: If no user with the given username exists.
         static User *getPointer( string Username )
         {
@@ -114,7 +114,7 @@ class User
         // Overloads the << operator to output user profile information in a formatted display.
         // @param out: The output stream to write to.
         // @param obj: The User object whose profile will be displayed.
-        // @return: The output stream reference for chaining.
+        // @return The output stream reference for chaining.
         friend ostream& operator<< ( ostream& out , const User & obj )
         {
             string menuName = "User Profile" ;
@@ -130,11 +130,11 @@ class User
         }
 
         // Retrieves the unique identifier of this user.
-        // @return: The ID of the user.
+        // @return The ID of the user.
         int getId () const { return id ; }
 
         // Retrieves the full name of this user.
-        // @return: The name as a string.
+        // @return The name as a string.
         string getName () const { return name ; }
         
         // Sets the name of this user.
@@ -142,11 +142,11 @@ class User
         void setName ( string value ) { name = value ; }
 
         // Retrieves the login username of this user.
-        // @return: The username as a string.
+        // @return The username as a string.
         string getUsername () const { return username ; }
 
         // Retrieves the type of this user.
-        // @return: The user type (1 for Student, 2 for Admin).
+        // @return The user type (1 for Student, 2 for Admin).
         int getType () const { return type ; }
         
         // Sets the type of this user.

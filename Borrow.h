@@ -21,7 +21,7 @@ private:
 public:
     // Retrieves a pointer to a Borrow object by its ID.
     // @param id: The ID of the borrow record to search for.
-    // @return: A pointer to the Borrow object if found, or nullptr otherwise.
+    // @return A pointer to the Borrow object if found, or nullptr otherwise.
     // @throws runtime_error: If no borrow record with the given ID exists.
     static Borrow *getPointer(int id)
     {
@@ -62,7 +62,11 @@ public:
         BorrowTable.insert(this);
     }
 
-    friend ostream &operator<< (ostream &out, const Borrow &obj)
+    // Overloads the << operator to output borrow information in a formatted display.
+    // @param out: The output stream to write to.
+    // @param obj: The Borrow object whose data will be displayed.
+    // @return The output stream reference for chaining.
+    friend ostream& operator<< ( ostream& out , const Borrow & obj )
     {
         string menuName = "Borrow Info";
         const vector<pair<string, string>> menu =
@@ -77,19 +81,19 @@ public:
     }
 
     // Retrieves the unique identifier of this borrow record.
-    // @return: The ID of the borrow record.
+    // @return The ID of the borrow record.
     int getId() const { return id; }
 
     // Retrieves the ID of the user associated with this borrow record.
-    // @return: The user ID.
+    // @return The user ID.
     int getUserId() const { return UserId; }
 
     // Retrieves the ID of the book associated with this borrow record.
-    // @return: The book ID.
+    // @return The book ID.
     int getBookId() const { return BookId; }
 
     // Retrieves the status of this borrow record.
-    // @return: True if the record is active, false if completed.
+    // @return True if the record is active, false if completed.
     bool getStatus() const { return status; }
 
     // Sets the status of this borrow record.
@@ -98,7 +102,7 @@ public:
 
     // Searches for all borrow records associated with a specific user.
     // @param UserId: The ID of the user whose borrow records to retrieve.
-    // @return: A vector containing pointers to all Borrow objects for the user.
+    // @return A vector containing pointers to all Borrow objects for the user.
     static vector<Borrow *> searchAll(int UserId)
     {
         function<bool(Borrow *)> condition = [&](Borrow *obj)
@@ -111,7 +115,7 @@ public:
 
     // Checks if a user has any books that need to be returned.
     // @param UserId: The ID of the user to check (currently unused, uses System::currPtr instead).
-    // @return: True if the user has at least one active borrow record, false otherwise.
+    // @return True if the user has at least one active borrow record, false otherwise.
     bool hasAbookToReturn(int UserId)
       
     // @param UserId: The ID of the user to check.

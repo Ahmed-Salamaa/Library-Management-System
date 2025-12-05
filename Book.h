@@ -22,7 +22,7 @@ class Book
 
         // Retrieves a pointer to a Book object by its ID.
         // @param id: The ID of the book to search for.
-        // @return: A pointer to the Book object if found, or nullptr otherwise.
+        // @return A pointer to the Book object if found, or nullptr otherwise.
         // @throws runtime_error: If no book with the given ID exists.
         static Book *getPointer(int id)
         {
@@ -36,7 +36,7 @@ class Book
 
         // Retrieves a pointer to a Book object by its title.
         // @param title: The title of the book to search for.
-        // @return: A pointer to the Book object if found, or nullptr otherwise.
+        // @return A pointer to the Book object if found, or nullptr otherwise.
         // @throws runtime_error: If no book with the given title exists.
         static Book *getPointer( string title )
         {
@@ -106,7 +106,7 @@ class Book
         // Overloads the << operator to output book information in a formatted display.
         // @param out: The output stream to write to.
         // @param obj: The Book object whose data will be displayed.
-        // @return: The output stream reference for chaining.
+        // @return The output stream reference for chaining.
         friend ostream& operator<< ( ostream& out , const Book & obj )
         {
             string menuName = "Book Info" ;
@@ -123,11 +123,11 @@ class Book
         }
 
         // Retrieves the unique identifier of this book.
-        // @return: The ID of the book.
+        // @return The ID of the book.
         int getId() const { return id ; }
         
         // Retrieves the title of this book.
-        // @return: The title as a string.
+        // @return The title as a string.
         string getTitle() const { return title ; }
         
         // Sets the title of this book.
@@ -135,7 +135,7 @@ class Book
         void setTitle ( const string & title ) { this->title = title ; }
 
         // Retrieves the author of this book.
-        // @return: The author as a string.
+        // @return The author as a string.
         string getAuthor() const { return author ; }
         
         // Sets the author of this book.
@@ -147,7 +147,7 @@ class Book
 
         // Checks if a book is available for borrowing.
         // @param BookId: The ID of the book to check.
-        // @return: True if the book exists and has quantity greater than 0, false otherwise.
+        // @return True if the book exists and has quantity greater than 0, false otherwise.
         static bool isAvailable(int BookId)
         {
             try

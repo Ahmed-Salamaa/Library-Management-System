@@ -8,6 +8,7 @@ using namespace std;
 #include "User.h"
 #include "Book.h"
 #include "Borrow.h"
+#include "Utilities.h"
 
 class System
 {
@@ -20,7 +21,7 @@ class System
         static User * currPtr ;
         
         // Checks whether the system has been started.
-        // @return: True if the system has been initialized, false otherwise.
+        // @return True if the system has been initialized, false otherwise.
         static bool systemStarted () { return systemState ; }
 
 };
