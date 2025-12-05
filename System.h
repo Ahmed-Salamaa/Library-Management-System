@@ -1,10 +1,7 @@
 #ifndef FILE_SYSTEM
 #define FILE_SYSTEM
 
-#include <iomanip>
-#include <ios>
-#include <iostream>
-#include <string>
+#include <bits/stdc++.h>
 using namespace std;
 
 #include "LinkedList.h"
@@ -24,6 +21,8 @@ class System
 
         static User * currPtr ;
         
+        // Checks whether the system has been started.
+        // @return: True if the system has been initialized, false otherwise.
         static bool systemStarted () { return systemState ; }
 
 };
