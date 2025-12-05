@@ -5,6 +5,7 @@
 using namespace std;
 
 #include "System.h"
+#include "Book.h"
 #include "Date.h"
 
 class Borrow
@@ -21,19 +22,18 @@ private:
     bool status;
 
 public:
-
     // Retrieves a pointer to a Borrow object by its ID.
     // @param id: The ID of the borrow record to search for.
     // @return: A pointer to the Borrow object if found, or nullptr otherwise.
     // @throws runtime_error: If no borrow record with the given ID exists.
     static Borrow *getPointer(int id)
     {
-        function < bool( Borrow * ) > condition = [&] ( Borrow * obj )
+        function<bool(Borrow *)> condition = [&](Borrow *obj)
         {
-            return obj->getId() == id ;
+            return obj->getId() == id;
         };
-        
-        return BorrowTable.search( condition );
+
+        return BorrowTable.search(condition);
     }
 
     // Initializes a Borrow object with a predefined ID and custom return date (used during system initialization).
@@ -83,15 +83,23 @@ public:
 
         BorrowTable.insert(this);
     }
+    Borrow(int UserId, int BookId, bool status)
+        : id(++ID_START), UserId(UserId), BookId(BookId), status(status)
+    {
+        if (!System::systemStarted())
+            throw runtime_error("You cant Create a Borrow object before system runs");
+
+        BorrowTable.insert(this);
+    }
 
     // Retrieves the unique identifier of this borrow record.
     // @return: The ID of the borrow record.
     int getId() const { return id; }
-    
+
     // Retrieves the ID of the user associated with this borrow record.
     // @return: The user ID.
     int getUserId() const { return UserId; }
-    
+
     // Retrieves the ID of the book associated with this borrow record.
     // @return: The book ID.
     int getBookId() const { return BookId; }
@@ -103,7 +111,7 @@ public:
     // Retrieves the return date of this record.
     // @return: The Date object representing when the book should be returned.
     Date getReturnDate() const { return returnDate; }
-    
+
     // Sets the return date of this record.
     // @param value: The new return date.
     void setReturnDate(Date value) { returnDate = value; }
@@ -111,7 +119,7 @@ public:
     // Retrieves the status of this borrow record.
     // @return: True if the record is active, false if completed.
     bool getStatus() const { return status; }
-    
+
     // Sets the status of this borrow record.
     // @param value: The new status (true for active, false for completed).
     void setStatus(bool value) { status = value; }
@@ -121,12 +129,56 @@ public:
     // @return: A vector containing pointers to all Borrow objects for the user.
     static vector<Borrow *> searchAll(int UserId)
     {
-        function < bool( Borrow * ) > condition = [&] ( Borrow * obj )
+        function<bool(Borrow *)> condition = [&](Borrow *obj)
         {
-            return obj->getUserId() == UserId ;
+            return obj->getUserId() == UserId;
         };
-        
-        return BorrowTable.searchAllByPredicate( condition );
+
+        return BorrowTable.searchAllByPredicate(condition);
+    }
+
+    bool hasAbookToReturn(int UserId)
+    {
+        vector<Borrow *> historyOfBorrowsForAUser = searchAll(System::currPtr->getId());
+        bool hasAbook = false;
+        for (auto &&i : historyOfBorrowsForAUser)
+        {
+            if (i->getStatus() == true)
+            {
+                hasAbook = true;
+                break;
+            }
+        }
+        return hasAbook;
+    }
+    // before using this function we need to use hasAbookToReturn if the returned value of the function
+    // true we use this function if no then we can not use it
+    void changeStatusOfBookForRutern(int BookId)
+    {
+        vector<Borrow *> historyOfBorrowsForAUser = searchAll(System::currPtr->getId());
+
+        for (auto &&i : historyOfBorrowsForAUser)
+        {
+            if (i->getBookId() == BookId)
+            {
+                i->setStatus(false);
+                return;
+            }
+        }
+    }
+    void changeStatusOfBookForBorrow(int BookId)
+    {
+        try
+        {
+            if (Book::isAvailable(BookId))
+            {
+                Borrow(System::currPtr->getId(), BookId, true);
+            }
+        }
+        catch (runtime_error &e)
+        {
+            throw runtime_error("The book is not available right now for borrow");
+        }
     }
 };
 

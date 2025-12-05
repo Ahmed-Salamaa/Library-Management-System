@@ -123,6 +123,19 @@ class Book
         // @param author: The new author for the book.
         void setAuthor ( const string & author ) { this->author = author ; }
 
+        static bool isAvailable(int BookId)
+    {
+        try
+        {
+            Book *book = getPointer(BookId);
+            return book->quantity > 0;
+        }
+        catch (runtime_error &e)
+        {
+            return false;
+        }
+    }
+
 };
 
 
