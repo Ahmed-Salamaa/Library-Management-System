@@ -73,6 +73,56 @@ class Utilities
             }
         }
 
+        // Validates username format and throws descriptive errors when invalid.
+        // Requirements enforced: length bounds, starts with a letter, and contains only letters, digits, or underscores.
+        // @param username: The username string to validate.
+        // @throws runtime_error: With a message describing the first failing rule.
+        // @return true when the username satisfies all rules.
+        static bool validateUsername ( const string & username )
+        {
+            const int usernameMinSize = 3 ;
+            const int usernameMaxSize = 20 ;
+            const regex usernamePattern { "^[A-Za-z][A-Za-z0-9_]*$" } ;
+
+            if ( username.size() < usernameMinSize )
+                throw runtime_error( "Username must be at least " + to_string(usernameMinSize) + " characters long" );
+
+            if ( username.size() > usernameMaxSize )
+                throw runtime_error( "Username must be at most " + to_string(usernameMaxSize) + " characters long" );
+
+            if ( !regex_match( username , usernamePattern ) )
+                throw runtime_error( "Username must start with a letter and contain only letters, digits, or underscores" );
+
+            return true ;
+        }
+
+        // Reads a username from input, validates it, and prints validation errors.
+        // @param in: Input stream to read from.
+        // @param out: Output stream to print prompts and errors.
+        // @return A username that satisfies all validation rules.
+        // @throws runtime_error: Propagates if the user requests exit from readString.
+        static string readUsername( istream& in = cin , ostream& out = cout )
+        {
+            while (true)
+            {
+                try
+                {
+                    string username = readString( in , out ) ;
+                    validateUsername( username ) ;
+                    return username ;
+                }
+                catch ( const runtime_error & e )
+                {
+                    if ( string( e.what() ) == "User requested exit" )
+                    {
+                        throw ;
+                    }
+
+                    out << e.what() << '\n' ;
+                }
+            }
+        }
+
         // Reads a string input from the user with validation.
         // @return The validated string input from the user (strips leading/trailing whitespace).
         // @throws runtime_error: If the user enters "exit" to quit or provides an empty string.
