@@ -1,7 +1,9 @@
 #ifndef FILE_DATE
 #define FILE_DATE
 
-#include "System.h"
+// #include "System.h"
+#include <bits/stdc++.h>
+using namespace std;
 
 class Date
 {
@@ -96,28 +98,6 @@ class Date
         }
 
         return result;
-    }
-
-    Date operator+(int days) const
-    {
-        Date result = *this ;
-
-        result.day += days ;
-
-        while ( true )
-        {
-            int ld = lastDay[result.month] ;
-            if ( result.day <= ld ) break ;
-            result.day -= ld ;
-            result.month ++ ;
-            if ( result.month > 12 )
-            {
-                result.month = 1 ;
-                result.year ++ ;
-            }
-        }
-
-        return result ;
     }
 
     void display() const
