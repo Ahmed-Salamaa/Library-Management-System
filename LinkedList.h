@@ -1,8 +1,7 @@
 #ifndef FILE_LINKED_LIST
 #define FILE_LINKED_LIST
 
-#include <vector>
-#include <string>
+#include <bits/stdc++.h>
 using namespace std;
 
 template <typename t>
@@ -24,11 +23,35 @@ private:
     int size;
 
 public:
+    // Initializes an empty linked list.
+    // @return: A new LinkedList instance with no elements.
     LinkedList() : head(nullptr), size(0) {}
-    
-    std::vector<t> searchAllByPredicate(std::function<bool(const t &)> condition)
+
+    // Inserts a new element at the beginning of the linked list.
+    // @param obj: The element of type 't' to be inserted.
+    void insert(t obj)
     {
-        std::vector<t> result;
+        node *newNode = new node(obj);
+
+        if (head == nullptr)
+            head = newNode;
+        else
+        {
+            newNode->next = head;
+            head = newNode;
+        }
+
+        size++;
+    }
+
+    // Searches the linked list for all elements that satisfy a given condition.
+    // @param condition: A function or lambda that takes a const reference to an element of type 't'
+    //                    and returns true if the element matches the desired condition.
+    // @return: A vector containing all elements in the list that satisfy the condition.
+    //          If no elements match, returns an empty vector.
+    vector<t> searchAllByPredicate(function<bool(const t &)> condition)
+    {
+        vector<t> result;
         node *curr = head;
 
         while (curr != nullptr)
@@ -42,78 +65,53 @@ public:
         return result;
     }
 
-    void insert(t obj)
-    {
-        node *newNode = new node(obj);
-
-        if (head == nullptr)
-        {
-            head = newNode;
-        }
-        else
-        {
-            newNode->next = head;
-            head = newNode;
-        }
-
-        size++;
-    }
-
-    t search(int id)
+    // Searches the linked list for the first element that satisfies a given condition.
+    // @param condition: A function or lambda that takes a const reference to an element of type 't'
+    //                    and returns true if the element matches the desired condition.
+    // @return: The first element in the list that satisfies the condition.
+    // @throws runtime_error: If the list is empty or no element satisfies the condition.
+    t search(function<bool(const t &)> condition)
     {
         node *curr = head;
 
-        if (curr == nullptr)
-            throw "There is no data";
+        if (size == 0)
+            throw runtime_error("There is no data");
 
         while (curr != nullptr)
         {
-            if (curr->data.getId() == id)
+            if (condition(curr->data))
                 return curr->data;
 
             curr = curr->next;
         }
 
-        throw "The data does not exist";
+        throw runtime_error("The data does not exist");
     }
 
-    t search(string name)
-    {
-        node *curr = head;
-
-        if (curr == nullptr)
-            throw "There is no data";
-
-        while (curr != nullptr)
-        {
-            if (curr == name)
-                return curr->data;
-
-            curr = curr->next;
-        }
-
-        throw "The data does not exist";
-    }
-
-    void erase(t obj)
+    // Erases the first element in the linked list that satisfies the given condition.
+    // @param condition: A function or lambda that takes a const reference to an element of type 't'
+    //                    and returns true if the element should be erased.
+    // @throws runtime_error: If the list is empty or no element satisfies the condition.
+    void erase(function<bool(const t &)> condition)
     {
         if (size == 0)
-            return;
+            throw runtime_error("There is no data");
 
         node *curr = head;
-        if (head->data == obj)
+
+        if (condition(curr->data))
         {
             head = head->next;
             delete curr;
             size--;
             return;
         }
+
         node *prev = nullptr;
-        curr = head;
 
         while (curr != nullptr)
         {
-            if (curr->data == obj)
+            if (condition(curr->data))
             {
                 prev->next = curr->next;
                 delete curr;
@@ -124,12 +122,8 @@ public:
             prev = curr;
             curr = curr->next;
         }
-    }
 
-    void erase(int id)
-    {
-        t obj = search(id);
-        erase(obj);
+        throw runtime_error("The data does not exist");
     }
 };
 

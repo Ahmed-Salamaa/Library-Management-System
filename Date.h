@@ -1,7 +1,6 @@
 #ifndef FILE_DATE
 #define FILE_DATE
 
-// #include "System.h"
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -17,9 +16,14 @@ class Date
 
     public :
 
+    // Initializes a Date object with default values (01/01/2000).
+    // @return: A new Date instance with day=1, month=1, year=2000.
     Date() : day(1), month(1), year(2000) {} ;
 
-    bool validDate(Date &other) // to check if date is valid date or not  (with date)
+    // Checks if a given Date object represents a valid date.
+    // @param other: The Date object to validate.
+    // @return: True if the date is valid, false otherwise.
+    bool validDate(Date &other)
     {
         int m = other.month, d = other.day, y = other.year;
         if (y < 0 || m < 1 || m > 12 || d < 1)
@@ -28,7 +32,12 @@ class Date
         return d <= lastDay[m];
     }
 
-    bool validDate(int d, int m, int y) // to check if date is valid date or not
+    // Checks if the given day, month, and year represent a valid date.
+    // @param d: The day value (1-31 depending on the month).
+    // @param m: The month value (1-12).
+    // @param y: The year value (must be non-negative).
+    // @return: True if the date is valid, false otherwise.
+    bool validDate(int d, int m, int y)
     {
         if (y < 0 || m < 1 || m > 12 || d < 1)
             return false;
@@ -36,11 +45,18 @@ class Date
         return d <= lastDay[m];
     }
 
+    // Sets the date from another Date object.
+    // @param other: The Date object to copy from.
     void setDate(const Date &other)
     {
         setDate(other.day, other.month, other.year);
     }
 
+    // Sets the date from individual day, month, and year values.
+    // Prompts the user to re-enter values if the date is invalid.
+    // @param d: The day value.
+    // @param m: The month value.
+    // @param y: The year value.
     void setDate(int d, int m, int y)
     {
         while (!validDate(d, m, y))
@@ -54,6 +70,9 @@ class Date
         this->year = y;
     }
 
+    // Compares two dates to determine if this date is earlier than another.
+    // @param T: The Date object to compare with.
+    // @return: True if this date is earlier than T, false otherwise.
     bool operator<(const Date &T) const
     {
         if (year != T.year)
@@ -63,6 +82,9 @@ class Date
         return day < T.day;
     }
 
+    // Assigns the value of another Date object to this Date object.
+    // @param other: The Date object to copy from.
+    // @return: A reference to this Date object.
     Date &operator=(const Date &other)
     {
         if (this == &other)
@@ -75,6 +97,9 @@ class Date
         return *this;
     }
 
+    // Adds a specified number of days to this date.
+    // @param days: The number of days to add.
+    // @return: A new Date object representing the result date.
     Date operator + ( int days ) const
     {
         Date result = *this ;
@@ -100,6 +125,7 @@ class Date
         return result;
     }
 
+    // Displays the date in DD/MM/YYYY format to the console.
     void display() const
     {
         cout << setw(2) << setfill('0') << day << "/"
@@ -107,12 +133,18 @@ class Date
              << year << endl;
     }
 
+    // Outputs a Date object to an output stream in string format.
+    // @param out: The output stream to write to.
+    // @param obj: The Date object to output.
+    // @return: The output stream reference.
     friend ostream& operator<< ( ostream& out , Date obj )
     {
         out << obj.toString() ;
         return out ;
     }
 
+    // Converts the date to a string representation in DD/MM/YYYY format.
+    // @return: A string containing the formatted date.
     string toString() const
     {
         char buf[11];
