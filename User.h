@@ -73,7 +73,7 @@ class User
         // @throws runtime_error: If no user with the given ID exists.
         static void deleteUser ( int id )
         {
-            User * ptr ;
+            User * ptr = getPointer(id);
 
             if ( ptr ) deleteUser( ptr ) ;
             else throw runtime_error( "Cannot delete user: No user found with ID " + to_string(id) ) ;
