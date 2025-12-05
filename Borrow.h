@@ -6,7 +6,6 @@ using namespace std;
 
 #include "System.h"
 #include "Book.h"
-#include "Date.h"
 
 class Borrow
 {
@@ -26,12 +25,12 @@ public:
     // @throws runtime_error: If no borrow record with the given ID exists.
     static Borrow *getPointer(int id)
     {
-        function < bool( Borrow * ) > condition = [&] ( Borrow * obj )
+        function<bool(Borrow *)> condition = [&](Borrow *obj)
         {
-            return obj->getId() == id ;
+            return obj->getId() == id;
         };
-        
-        return BorrowTable.search( condition );
+
+        return BorrowTable.search(condition);
     }
 
     // Initializes a Borrow object with a predefined ID (used during system initialization).
@@ -63,19 +62,18 @@ public:
         BorrowTable.insert(this);
     }
 
-    friend ostream& operator<< ( ostream& out , const Borrow & obj )
+    friend ostream &operator<<(ostream &out, const Borrow &obj)
     {
-        string menuName = "Borrow Info" ;
-        const vector < pair < string , string > > menu =
-        {
-            { "Book Title" , Book::getPointer(obj.BookId)->getTitle } ,
-            { "User Name" , User::getPointer(obj.UserId)->getName } ,
-            { "Status" , to_string(obj.status) }
-        } ;
+        string menuName = "Borrow Info";
+        const vector<pair<string, string>> menu =
+            {
+                {"Book Title", Book::getPointer(obj.BookId)->getTitle()},
+                {"User Name", User::getPointer(obj.UserId)->getName()},
+                {"Status", to_string(obj.status)}};
 
-        Utilities::printData( menuName , menu , out ) ;
+        Utilities::printData(menuName, menu, out);
 
-        return out ;
+        return out;
     }
 
     // Retrieves the unique identifier of this borrow record.
@@ -103,7 +101,7 @@ public:
     // @return: A vector containing pointers to all Borrow objects for the user.
     static vector<Borrow *> searchAll(int UserId)
     {
-        function < bool( Borrow * ) > condition = [&] ( Borrow * obj )
+        function<bool(Borrow *)> condition = [&](Borrow *obj)
         {
             return obj->getUserId() == UserId;
         };
@@ -113,20 +111,20 @@ public:
 
     // Checks if a user has any books that need to be returned.
     // @param UserId: The ID of the user to check.
-    // @return: True if the user has at least one active borrow record, false otherwise.
-    bool hasAbookToReturn(int UserId)
+    // @return: bookId if the user has at least one active borrow record, -1 otherwise.
+    int bookToReturn(int UserId)
     {
         vector<Borrow *> historyOfBorrowsForAUser = searchAll(System::currPtr->getId());
-        bool hasAbook = false;
+        int bookId = -1;
         for (auto &&i : historyOfBorrowsForAUser)
         {
             if (i->getStatus() == true)
             {
-                hasAbook = true;
+                bookId = i->getBookId();
                 break;
             }
         }
-        return hasAbook;
+        return bookId;
     }
 
     // Changes the status of a book borrow record to returned (false).
@@ -141,6 +139,7 @@ public:
             if (i->getBookId() == BookId)
             {
                 i->setStatus(false);
+                Book::increaseQuantity(BookId);
                 return;
             }
         }
@@ -156,6 +155,7 @@ public:
             if (Book::isAvailable(BookId))
             {
                 Borrow(System::currPtr->getId(), BookId, true);
+                Book::decreaseQuantity(BookId);
             }
         }
         catch (runtime_error &e)
