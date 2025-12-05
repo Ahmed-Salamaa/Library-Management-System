@@ -15,26 +15,28 @@ private:
 
         // Initializes an empty node with default-constructed data and null next pointer.
         node() : data(), next(nullptr) {}
+
         // Initializes a node with the provided data value and null next pointer.
         // @param val: The data to store in the node.
         node(t val) : data(val), next(nullptr) {}
 
         // Compares two nodes for equality based on their data.
         // @param rhs: The right-hand side node to compare with.
-        // @return: True if the data of both nodes are equal, false otherwise.
+        // @return True if the data of both nodes are equal, false otherwise.
         bool operator==(const node &rhs) { return data == rhs.data; }
-        
+
         // Compares two nodes for inequality based on their data.
         // @param rhs: The right-hand side node to compare with.
-        // @return: True if the data of both nodes are not equal, false otherwise.
+        // @return True if the data of both nodes are not equal, false otherwise.
         bool operator!=(const node &rhs) { return data != rhs.data; }
     };
     node *head;
     int size;
 
 public:
+
     // Initializes an empty linked list.
-    // @return: A new LinkedList instance with no elements.
+    // @return A new LinkedList instance with no elements.
     LinkedList() : head(nullptr), size(0) {}
 
     // Inserts a new element at the beginning of the linked list.
@@ -57,7 +59,7 @@ public:
     // Searches the linked list for all elements that satisfy a given condition.
     // @param condition: A function or lambda that takes a const reference to an element of type 't'
     //                    and returns true if the element matches the desired condition.
-    // @return: A vector containing all elements in the list that satisfy the condition.
+    // @return A vector containing all elements in the list that satisfy the condition.
     //          If no elements match, returns an empty vector.
     vector<t> searchAllByPredicate(function<bool(const t &)> condition)
     {
@@ -78,7 +80,7 @@ public:
     // Searches the linked list for the first element that satisfies a given condition.
     // @param condition: A function or lambda that takes a const reference to an element of type 't'
     //                    and returns true if the element matches the desired condition.
-    // @return: The first element in the list that satisfies the condition.
+    // @return The first element in the list that satisfies the condition.
     // @throws runtime_error: If the list is empty or no element satisfies the condition.
     t search(function<bool(const t &)> condition)
     {
