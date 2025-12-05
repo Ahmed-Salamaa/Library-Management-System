@@ -63,6 +63,21 @@ public:
         BorrowTable.insert(this);
     }
 
+    friend ostream& operator<< ( ostream& out , const Borrow & obj )
+    {
+        string menuName = "Borrow Info" ;
+        const vector < pair < string , string > > menu =
+        {
+            { "Book Title" , Book::getPointer(obj.BookId)->getTitle } ,
+            { "User Name" , User::getPointer(obj.UserId)->getName } ,
+            { "Status" , to_string(obj.status) }
+        } ;
+
+        Utilities::printData( menuName , menu , out ) ;
+
+        return out ;
+    }
+
     // Retrieves the unique identifier of this borrow record.
     // @return: The ID of the borrow record.
     int getId() const { return id; }

@@ -111,6 +111,20 @@ class User
             UserTable.insert( this ) ;
         }
 
+        friend ostream& operator<< ( ostream& out , const User & obj )
+        {
+            string menuName = "User Profile" ;
+            const vector < pair < string , string > > menu =
+            {
+                { "Name" , obj.name } ,
+                { "Username" , obj.username }
+            } ;
+
+            Utilities::printData( menuName , menu , out ) ;
+
+            return out ;
+        }
+
         // Retrieves the unique identifier of this user.
         // @return: The ID of the user.
         int getId () const { return id ; }
@@ -144,7 +158,7 @@ class User
         void userMenu ()
         {
             string menuName = "User Account Menu" ;
-            vector <string> menu = 
+            const vector <string> menu = 
             {
                 "View Profile",
                 "Change Password",
@@ -152,9 +166,29 @@ class User
                 "Logout"
             } ;
 
-            int chose = Utilities::prinitMenu( menuName , menu ) ;
+            int chose = Utilities::printMenu( menuName , menu , cout ) ;
+            int idx = 1 ;
 
-            // some condations
+            if ( chose == idx ++ )
+            {
+                cout << *this ;
+            }
+            else if ( chose == idx ++ )
+            {
+                // will add later
+            }
+            else if ( chose == idx ++ )
+            {
+                // will add later
+            }
+            else if ( chose == idx ++ )
+            {
+                // will add later
+            }
+            else
+            {
+                throw runtime_error( "Invaild option" ) ;
+            }
         }
 
 };

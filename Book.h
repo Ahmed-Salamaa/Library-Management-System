@@ -103,6 +103,21 @@ class Book
             BookTable.insert( this ) ;
         }
 
+        friend ostream& operator<< ( ostream& out , const Book & obj )
+        {
+            string menuName = "Book Info" ;
+            const vector < pair < string , string > > menu =
+            {
+                { "Quantity" , to_string(obj.quantity) } ,
+                { "Title" , obj.title } ,
+                { "Author" , obj.author }
+            } ;
+
+            Utilities::printData( menuName , menu , out ) ;
+
+            return out ;
+        }
+
         // Retrieves the unique identifier of this book.
         // @return: The ID of the book.
         int getId() const { return id ; }
