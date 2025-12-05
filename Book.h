@@ -138,6 +138,9 @@ class Book
         // @param author: The new author for the book.
         void setAuthor ( const string & author ) { this->author = author ; }
 
+        void setQuantity(int quantity) {  this->quantity = quantity; }
+        int getQuantity() { return this->quantity; }
+
         // Checks if a book is available for borrowing.
         // @param BookId: The ID of the book to check.
         // @return: True if the book exists and has quantity greater than 0, false otherwise.
@@ -153,6 +156,59 @@ class Book
                 return false;
             }
         }
+
+        static void updateBookData(int BookId){
+            auto bookPtr = BookTable.search([&](Book* obj){
+                return obj->getId() == BookId;
+            });
+            if (!bookPtr) {
+                throw runtime_error("Book not found!");
+                return;
+            }
+            cout<<"Which data do you want to update?:\n1. Title\n2. Author\n3. Quantity\n";
+            int choice;
+            cin>>choice;
+            if(choice==1){
+                cout<<"Enter new title: ";
+                string newTitle;
+                getline(cin,newTitle);
+                bookPtr->setTitle(newTitle);
+            }
+            else if(choice==2){
+                cout<<"Enter new author: ";
+                string newAuthor;
+                getline(cin,newAuthor);
+                bookPtr->setAuthor(newAuthor);
+            }
+            else if(choice==3){
+                cout<<"Enter new quantity: ";
+                int newQuantity;
+                cin>>newQuantity;
+                bookPtr->setQuantity(newQuantity);
+            }
+            else{
+                cout<<"Invalid choice!"<<endl;
+            }
+        }
+
+        static void increaseQuantity(int BookId) {
+            auto bookPtr = BookTable.search([&](Book* obj){
+                return obj->getId() == BookId;
+            });
+            bookPtr->quantity += 1;
+        }
+
+        static void decreaseQuantity(int BookId) {
+            auto bookPtr = BookTable.search([&](Book* obj){
+                return obj->getId() == BookId;
+            });
+            if (bookPtr->quantity > 0) {
+                bookPtr->quantity -= 1;
+            } else {
+                throw runtime_error("Cannot decrease quantity below zero.");
+            }
+        }
+
 
 };
 
