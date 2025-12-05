@@ -62,7 +62,7 @@ class Utilities
         // @param menuName: The title of the menu to display.
         // @param menu: A vector of strings representing the menu options.
         // @return: The user's menu choice (1-based index).
-        static int printMenu ( string menuName , const vector <string>& menu )
+        static int printMenu ( const string & menuName , const vector <string>& menu , ostream& out )
         {
             int maxWidth = menuName.size();
             for (const auto& item : menu)
@@ -74,24 +74,24 @@ class Utilities
             maxWidth = max(maxWidth, (int)30) + 4;
             string horizontalLine ( maxWidth , '=' ) ;
             
-            cout << "\n╔" << horizontalLine << "╗\n";
+            out << "\n╔" << horizontalLine << "╗\n";
             
             int leftPad = (maxWidth - menuName.size()) / 2;
             int rightPad = maxWidth - menuName.size() - leftPad;
-            cout << "║" << string(leftPad, ' ') << menuName << string(rightPad, ' ') << "║\n";
+            out << "║" << string(leftPad, ' ') << menuName << string(rightPad, ' ') << "║\n";
             
-            cout << "╠" << horizontalLine << "╣\n";
+            out << "╠" << horizontalLine << "╣\n";
             
             for ( int i = 0 ; i < menu.size() ; i ++ )
             {
                 string item = "  " + to_string(i + 1) + ". " + menu[i];
                 int padding = maxWidth - item.size();
-                cout << "║" << item << string(padding, ' ') << "║\n";
+                out << "║" << item << string(padding, ' ') << "║\n";
             }
             
-            cout << "╚" << horizontalLine << "╝\n";
+            out << "╚" << horizontalLine << "╝\n";
             
-            cout << "Enter your choice: " ;
+            out << "Enter your choice: " ;
             return readInt(1, menu.size());
         }
 
@@ -99,7 +99,7 @@ class Utilities
         // @param out: The output stream to write to.
         // @param menuName: The title of the data display.
         // @param menu: A vector of key-value pairs to display.
-        static void printData ( ostream& out , string menuName , const vector < pair<string,string> > & menu )
+        static void printData ( const string & menuName , const vector < pair<string,string> > & menu , ostream& out )
         {
             int maxWidth = menuName.size();
             for (const auto& [ item1 , item2 ] : menu)

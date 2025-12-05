@@ -114,13 +114,13 @@ class User
         friend ostream& operator<< ( ostream& out , const User & obj )
         {
             string menuName = "User Profile" ;
-            vector < pair < string , string > > menu =
+            const vector < pair < string , string > > menu =
             {
                 { "Name" , obj.name } ,
                 { "Username" , obj.username }
             } ;
 
-            Utilities::printData( out , menuName , menu ) ;
+            Utilities::printData( menuName , menu , out ) ;
 
             return out ;
         }
@@ -158,7 +158,7 @@ class User
         void userMenu ()
         {
             string menuName = "User Account Menu" ;
-            vector <string> menu = 
+            const vector <string> menu = 
             {
                 "View Profile",
                 "Change Password",
@@ -166,7 +166,7 @@ class User
                 "Logout"
             } ;
 
-            int chose = Utilities::printMenu( menuName , menu ) ;
+            int chose = Utilities::printMenu( menuName , menu , cout ) ;
             int idx = 1 ;
 
             if ( chose == idx ++ )
