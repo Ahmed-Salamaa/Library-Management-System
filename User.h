@@ -5,6 +5,7 @@
 using namespace std;
 
 #include "System.h"
+#include "Utilities.h"
 
 class User
 {
@@ -137,11 +138,25 @@ class User
         // Displays the main menu for the user.
         // This is a virtual method to be overridden by subclasses (Student, Admin).
         virtual void mainMenu () ;
-        
+
+        // Displays the user account management menu.
+        // Provides options for viewing profile, changing password, and logging out.
+        void userMenu ()
+        {
+            string menuName = "User Account Menu" ;
+            vector <string> menu = 
+            {
+                "View Profile",
+                "Change Password",
+                "Change Name",
+                "Logout"
+            } ;
+
+            int chose = Utilities::prinitMenu( menuName , menu ) ;
+
+            // some condations
+        }
+
 };
-
-
-
-
 
 #endif

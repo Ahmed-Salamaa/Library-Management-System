@@ -123,18 +123,21 @@ class Book
         // @param author: The new author for the book.
         void setAuthor ( const string & author ) { this->author = author ; }
 
+        // Checks if a book is available for borrowing.
+        // @param BookId: The ID of the book to check.
+        // @return: True if the book exists and has quantity greater than 0, false otherwise.
         static bool isAvailable(int BookId)
-    {
-        try
         {
-            Book *book = getPointer(BookId);
-            return book->quantity > 0;
+            try
+            {
+                Book *book = getPointer(BookId);
+                return getPointer(BookId)->quantity > 0;
+            }
+            catch (runtime_error &e)
+            {
+                return false;
+            }
         }
-        catch (runtime_error &e)
-        {
-            return false;
-        }
-    }
 
 };
 
