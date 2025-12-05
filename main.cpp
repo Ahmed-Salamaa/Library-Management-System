@@ -16,7 +16,7 @@ int main() {
                 "Logout"
             } ;
 
-            int chose = Utilities::prinitMenu( menuName , menu ) ;
+            int chose = Utilities::printMenu( menuName , menu , cout ) ;
 
 
     return 0;

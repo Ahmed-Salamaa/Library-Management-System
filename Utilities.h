@@ -62,7 +62,7 @@ class Utilities
         // @param menuName: The title of the menu to display.
         // @param menu: A vector of strings representing the menu options.
         // @return: The user's menu choice (1-based index).
-        static int printMenu ( const string & menuName , const vector <string>& menu , ostream& out )
+        static int printMenu ( const string & menuName , const vector <string>& menu , ostream& out = cout )
         {
             int maxWidth = menuName.size();
             for (const auto& item : menu)
@@ -82,7 +82,7 @@ class Utilities
             
             out << "╠" << horizontalLine << "╣\n";
             
-            for ( int i = 0 ; i < menu.size() ; i ++ )
+            for ( int i = 0 ; i < (int)(menu.size()) ; i ++ )
             {
                 string item = "  " + to_string(i + 1) + ". " + menu[i];
                 int padding = maxWidth - item.size();

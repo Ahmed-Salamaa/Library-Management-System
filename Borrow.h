@@ -62,7 +62,7 @@ public:
         BorrowTable.insert(this);
     }
 
-    friend ostream &operator<<(ostream &out, const Borrow &obj)
+    friend ostream &operator<< (ostream &out, const Borrow &obj)
     {
         string menuName = "Borrow Info";
         const vector<pair<string, string>> menu =
@@ -110,6 +110,10 @@ public:
     }
 
     // Checks if a user has any books that need to be returned.
+    // @param UserId: The ID of the user to check (currently unused, uses System::currPtr instead).
+    // @return: True if the user has at least one active borrow record, false otherwise.
+    bool hasAbookToReturn(int UserId)
+      
     // @param UserId: The ID of the user to check.
     // @return: bookId if the user has at least one active borrow record, -1 otherwise.
     int bookToReturn(int UserId)

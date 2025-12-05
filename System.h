@@ -9,8 +9,6 @@ using namespace std;
 #include "Book.h"
 #include "Borrow.h"
 
-
-
 class System
 {
     private :

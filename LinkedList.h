@@ -13,10 +13,20 @@ private:
         t data;
         node *next;
 
+        // Initializes an empty node with default-constructed data and null next pointer.
         node() : data(), next(nullptr) {}
+        // Initializes a node with the provided data value and null next pointer.
+        // @param val: The data to store in the node.
         node(t val) : data(val), next(nullptr) {}
 
+        // Compares two nodes for equality based on their data.
+        // @param rhs: The right-hand side node to compare with.
+        // @return: True if the data of both nodes are equal, false otherwise.
         bool operator==(const node &rhs) { return data == rhs.data; }
+        
+        // Compares two nodes for inequality based on their data.
+        // @param rhs: The right-hand side node to compare with.
+        // @return: True if the data of both nodes are not equal, false otherwise.
         bool operator!=(const node &rhs) { return data != rhs.data; }
     };
     node *head;

@@ -103,6 +103,10 @@ class Book
             BookTable.insert( this ) ;
         }
 
+        // Overloads the << operator to output book information in a formatted display.
+        // @param out: The output stream to write to.
+        // @param obj: The Book object whose data will be displayed.
+        // @return: The output stream reference for chaining.
         friend ostream& operator<< ( ostream& out , const Book & obj )
         {
             string menuName = "Book Info" ;
