@@ -10,7 +10,6 @@ using namespace std;
 #include "Borrow.h"
 #include "Utilities.h"
 
-
 class System
 {
     private :
