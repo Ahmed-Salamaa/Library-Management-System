@@ -67,7 +67,7 @@ public:
     // @throws runtime_error: If no book with the given ID exists.
     static void deleteBook(int id)
     {
-        Book *ptr;
+        Book *ptr = getPointer(id);
 
         if (ptr)
             deleteBook(ptr);
