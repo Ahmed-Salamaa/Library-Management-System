@@ -6,7 +6,6 @@ using namespace std;
 
 #include "System.h"
 #include "Book.h"
-#include "Date.h"
 
 class Borrow
 {
@@ -63,13 +62,17 @@ public:
         BorrowTable.insert(this);
     }
 
+    // Overloads the << operator to output borrow information in a formatted display.
+    // @param out: The output stream to write to.
+    // @param obj: The Borrow object whose data will be displayed.
+    // @return: The output stream reference for chaining.
     friend ostream& operator<< ( ostream& out , const Borrow & obj )
     {
         string menuName = "Borrow Info" ;
         const vector < pair < string , string > > menu =
         {
-            { "Book Title" , Book::getPointer(obj.BookId)->getTitle } ,
-            { "User Name" , User::getPointer(obj.UserId)->getName } ,
+            { "Book Title" , Book::getPointer(obj.BookId)->getTitle() } ,
+            { "User Name" , User::getPointer(obj.UserId)->getName() } ,
             { "Status" , to_string(obj.status) }
         } ;
 
@@ -112,7 +115,7 @@ public:
     }
 
     // Checks if a user has any books that need to be returned.
-    // @param UserId: The ID of the user to check.
+    // @param UserId: The ID of the user to check (currently unused, uses System::currPtr instead).
     // @return: True if the user has at least one active borrow record, false otherwise.
     bool hasAbookToReturn(int UserId)
     {

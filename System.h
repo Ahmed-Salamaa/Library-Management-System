@@ -8,7 +8,6 @@ using namespace std;
 #include "User.h"
 #include "Book.h"
 #include "Borrow.h"
-#include "Date.h"
 
 
 class System
@@ -35,7 +34,6 @@ int   Book::ID_START = 1'000'000 ;
 User * System::currPtr = nullptr ;
 bool System::systemState = false ;
 
-const int Date::lastDay[] = { 0 , 31 , 28 , 31 , 30 , 31 , 30 , 31 , 31 , 30 , 31 , 30 , 31 } ;
 
 
 #endif

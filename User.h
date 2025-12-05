@@ -111,6 +111,10 @@ class User
             UserTable.insert( this ) ;
         }
 
+        // Overloads the << operator to output user profile information in a formatted display.
+        // @param out: The output stream to write to.
+        // @param obj: The User object whose profile will be displayed.
+        // @return: The output stream reference for chaining.
         friend ostream& operator<< ( ostream& out , const User & obj )
         {
             string menuName = "User Profile" ;
