@@ -274,7 +274,7 @@ class Utilities
             for ( int i = 0 ; i < (int)(menu.size()) ; i ++ )
             {
                 string item = "  " + menu[i].first + ": " + menu[i].second;
-                int padding = maxWidth - menu[i].first.size() + menu[i].second.size() ;
+                int padding = maxWidth - menu[i].first.size() - menu[i].second.size() - 4 ;
                 out << "║" << item << string(padding, ' ') << "║\n";
             }
             
