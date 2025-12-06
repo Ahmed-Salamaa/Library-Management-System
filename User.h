@@ -17,12 +17,15 @@ class User
     protected:
 
         const int id;
-        string name , password ;
-        const string username ;
-
         // type = 1 for Student
         // type = 2 for Admin
         int type;
+        string name ;
+        const string username ;
+        string password ;
+        
+
+        
 
     public:
 

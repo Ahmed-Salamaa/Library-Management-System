@@ -2,6 +2,12 @@
 using namespace std;
 
 #include "Utilities.h"
+#include "User.h"
+#include "Admin.h"
+#include "Book.h"
+#include "Borrow.h"
+#include "LinkedList"
+#incl
 
 int main() {
 

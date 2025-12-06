@@ -6,6 +6,7 @@ using namespace std;
 
 #include "System.h"
 #include "Book.h"
+#include "User.h"
 
 class Borrow
 {
@@ -116,7 +117,20 @@ public:
     // Checks if a user has any books that need to be returned.
     // @param UserId: The ID of the user to check (currently unused, uses System::currPtr instead).
     // @return True if the user has at least one active borrow record, false otherwise.
-    bool hasAbookToReturn(int UserId)
+    bool hasAbookToReturn( int UserId )
+    {
+        vector<Borrow *> historyOfBorrowsForAUser = searchAll(System::getPointer( UserId ));
+        bool hasAbook = false;
+        for (auto & i : historyOfBorrowsForAUser)
+        {
+            if (i->getStatus() == true)
+            {
+                hasAbook = true;
+                break;
+            }
+        }
+        return hasAbook;
+    }
       
     // @param UserId: The ID of the user to check.
     // @return: bookId if the user has at least one active borrow record, -1 otherwise.
