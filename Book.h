@@ -5,6 +5,7 @@
 using namespace std;
 
 #include "System.h"
+#include "Utilities.h"
 
 class Book 
 {
@@ -161,35 +162,55 @@ class Book
             }
         }
 
-        static void updateBookData(int BookId){
+        static void updateBookData(int BookId)
+        {
             auto bookPtr = getPointer(BookId);
-            if (!bookPtr) {
+
+            if (!bookPtr) 
+            {
                 throw runtime_error("Book not found!");
                 return;
             }
-            cout<<"Which data do you want to update?:\n1. Title\n2. Author\n3. Quantity\n";
-            int choice;
-            cin>>choice;
-            if(choice==1){
-                cout<<"Enter new title: ";
-                string newTitle;
-                getline(cin,newTitle);
-                bookPtr->setTitle(newTitle);
+
+            string menuName = "Which data do you want to update?" ;
+            vector <string> menu =
+            {
+                "Title" ,
+                "Author" ,
+                "Quantity" ,
+            } ;
+
+            try 
+            {
+                int choice = Utilities::printMenu( menuName , menu ) ;
+
+                if(choice==1)
+                {
+                    cout<<"Enter new title: ";
+                    string newTitle = Utilities::readString() ;
+                    bookPtr->setTitle(newTitle);
+                }
+                else if(choice==2)
+                {
+                    cout<<"Enter new author: ";
+                    string newAuthor = Utilities::readString() ;
+                    bookPtr->setAuthor(newAuthor);
+                }
+                else if(choice==3)
+                {
+                    cout<<"Enter new quantity: ";
+                    int newQuantity = Utilities::readInt( 0 , 1e9 ) ;
+
+                    bookPtr->setQuantity(newQuantity);
+                }
+                else
+                {
+                    cout<<"Invalid choice!"<<endl;
+                }
             }
-            else if(choice==2){
-                cout<<"Enter new author: ";
-                string newAuthor;
-                getline(cin,newAuthor);
-                bookPtr->setAuthor(newAuthor);
-            }
-            else if(choice==3){
-                cout<<"Enter new quantity: ";
-                int newQuantity;
-                cin>>newQuantity;
-                bookPtr->setQuantity(newQuantity);
-            }
-            else{
-                cout<<"Invalid choice!"<<endl;
+            catch (...)
+            {
+                return ;
             }
         }
 
