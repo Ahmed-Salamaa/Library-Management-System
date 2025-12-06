@@ -223,7 +223,7 @@ class Utilities
                 if (itemWidth > maxWidth) maxWidth = itemWidth;
             }
             
-            maxWidth = max(maxWidth, (int)30) + 4;
+            maxWidth += 4;
             string horizontalLine ( maxWidth , '=' ) ;
             
             out << "\n╔" << horizontalLine << "╗\n";
@@ -260,7 +260,7 @@ class Utilities
                 if (itemWidth > maxWidth) maxWidth = itemWidth;
             }
             
-            maxWidth = max(maxWidth, (int)30) + 4;
+            maxWidth += 4;
             string horizontalLine ( maxWidth , '=' ) ;
             
             out << "\n╔" << horizontalLine << "╗\n";
