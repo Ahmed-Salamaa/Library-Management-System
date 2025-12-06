@@ -124,7 +124,8 @@ class User
             const vector < pair < string , string > > menu =
             {
                 { "Name" , obj.name } ,
-                { "Username" , obj.username }
+                { "Username" , obj.username } ,
+                { "Type" , ( obj.type == 1 ? "Student" : "Admin" ) }
             } ;
 
             Utilities::printData( menuName , menu , out ) ;
@@ -197,6 +198,48 @@ class User
                 throw runtime_error( "Invaild option" ) ;
             }
         }
+
+        static void printUser( int Id ) 
+        {
+
+            try
+            {
+                User* p = User::getPointer(Id);
+                cout << *p ;
+            }
+            catch
+            {
+                cout << "Error: User with ID " << Id << " doesn't exist!" << endl;
+            }
+        }
+
+        static void PrintAllUsers() 
+        {
+            
+            function < bool( User * ) > condation = [&] ( User * obj )
+            {
+                return 1 ;
+            } ;
+
+            auto usersPointers = this->UserTable.searchAllByPredicate( condation ) ;
+
+            if (usersPointers.empty()) 
+            {
+                cout << "No users in the system." << endl;
+            }
+            else
+            {
+                for ( auto it : usersPointers ) 
+                {
+                    cout << *it ;
+                }
+            }
+
+        }
+    
+
+
+        
 
 };
 
