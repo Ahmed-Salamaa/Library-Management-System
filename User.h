@@ -207,7 +207,7 @@ class User
                 User* p = User::getPointer(Id);
                 cout << *p ;
             }
-            catch
+            catch(...)
             {
                 cout << "Error: User with ID " << Id << " doesn't exist!" << endl;
             }
@@ -221,7 +221,7 @@ class User
                 return 1 ;
             } ;
 
-            auto usersPointers = this->UserTable.searchAllByPredicate( condation ) ;
+            auto usersPointers = UserTable.searchAllByPredicate( condation ) ;
 
             if (usersPointers.empty()) 
             {
