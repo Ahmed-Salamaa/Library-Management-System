@@ -205,7 +205,7 @@ class Utilities
                 else
                 {
                     out << "Number out of range! Please enter a number between " 
-                         << min << " and " << max << ": ";
+                         << min << " and " << max << " (or 'exit' to quit): ";
                 }
             }
         }
@@ -243,7 +243,7 @@ class Utilities
             
             out << "╚" << horizontalLine << "╝\n";
             
-            out << "Enter your choice: " ;
+            out << "Enter your choice (or 'exit' to quit) : " ;
             return readInt(1, menu.size());
         }
 
@@ -260,7 +260,7 @@ class Utilities
                 if (itemWidth > maxWidth) maxWidth = itemWidth;
             }
             
-            maxWidth += 4;
+            maxWidth += 6;
             string horizontalLine ( maxWidth , '=' ) ;
             
             out << "\n╔" << horizontalLine << "╗\n";

@@ -74,7 +74,8 @@ public:
             {
                 {"Book Title", Book::getPointer(obj.BookId)->getTitle()},
                 {"User Name", User::getPointer(obj.UserId)->getName()},
-                {"Status", to_string(obj.status)}};
+                {"Status", to_string(obj.status)}
+            };
 
         Utilities::printData(menuName, menu, out);
 
