@@ -119,7 +119,7 @@ public:
     // @return True if the user has at least one active borrow record, false otherwise.
     bool hasAbookToReturn( int UserId )
     {
-        vector<Borrow *> historyOfBorrowsForAUser = searchAll(System::getPointer( UserId ));
+        vector<Borrow *> historyOfBorrowsForAUser = searchAll(UserId);
         bool hasAbook = false;
         for (auto & i : historyOfBorrowsForAUser)
         {
@@ -170,7 +170,7 @@ public:
     // Creates a new borrow record for the current user if the book is available.
     // @param BookId: The ID of the book to borrow.
     // @throws runtime_error: If the book is not available for borrowing.
-    void changeStatusOfBookForBorrow(int BookId)
+    static void changeStatusOfBookForBorrow(int BookId)
     {
         try
         {

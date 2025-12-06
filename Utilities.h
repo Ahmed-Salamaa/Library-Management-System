@@ -126,7 +126,7 @@ class Utilities
         // Reads a string input from the user with validation.
         // @return The validated string input from the user (strips leading/trailing whitespace).
         // @throws runtime_error: If the user enters "exit" to quit or provides an empty string.
-        static string readString( istream& in , ostream& out )
+        static string readString( istream& in = cin , ostream& out = cout )
         {
             string input;
             
