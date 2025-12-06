@@ -6,23 +6,31 @@ using namespace std;
 // #include "Admin.h"
 // #include "Book.h"
 // #include "Borrow.h"
-// #include "LinkedList"
-// #incl
+// #include "LinkedList.h"
 
 int main() {
 
-
-
-            string menuName = "User Account Menu" ;
-            vector <string> menu = 
+        string menuName = "Book Info";
+        const vector<pair<string, string>> menu =
             {
-                "View Profile",
-                "Change Password",
-                "Change Name",
-                "Logout"
-            } ;
+                {"Quantity", to_string(150)},
+                {"Title", "Introduction to Algorithms"},
+                {"Author", "Cormen                              d"}};
 
-            int chose = Utilities::printMenu( menuName , menu , cout ) ;
+        Utilities::printData(menuName, menu,cout);
+
+
+
+            // string menuName = "User Account Menu" ;
+            // vector <string> menu = 
+            // {
+            //     "View Profile",
+            //     "Change Password",
+            //     "Change Name",
+            //     "Logout"
+            // } ;
+
+            // int chose = Utilities::printMenu( menuName , menu , cout ) ;
 
 
     return 0;

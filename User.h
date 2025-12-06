@@ -7,6 +7,7 @@ using namespace std;
 #include "System.h"
 #include "Utilities.h"
 
+class System ;
 class User
 {
     private:
