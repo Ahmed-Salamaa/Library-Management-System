@@ -207,7 +207,7 @@ class User
                 User* p = User::getPointer(Id);
                 cout << *p ;
             }
-            catch (...)
+            catch(...)
             {
                 cout << "Error: User with ID " << Id << " doesn't exist!" << endl;
             }
