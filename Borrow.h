@@ -67,7 +67,7 @@ public:
     // @param out: The output stream to write to.
     // @param obj: The Borrow object whose data will be displayed.
     // @return The output stream reference for chaining.
-    friend ostream& operator<< ( ostream& out , const Borrow & obj )
+    friend ostream &operator<<(ostream &out, const Borrow &obj)
     {
         string menuName = "Borrow Info";
         const vector<pair<string, string>> menu =
@@ -117,11 +117,11 @@ public:
     // Checks if a user has any books that need to be returned.
     // @param UserId: The ID of the user to check (currently unused, uses System::currPtr instead).
     // @return True if the user has at least one active borrow record, false otherwise.
-    bool hasAbookToReturn( int UserId )
+    bool hasAbookToReturn(int UserId)
     {
         vector<Borrow *> historyOfBorrowsForAUser = searchAll(UserId);
         bool hasAbook = false;
-        for (auto & i : historyOfBorrowsForAUser)
+        for (auto &i : historyOfBorrowsForAUser)
         {
             if (i->getStatus() == true)
             {
@@ -131,7 +131,7 @@ public:
         }
         return hasAbook;
     }
-      
+
     // @param UserId: The ID of the user to check.
     // @return: bookId if the user has at least one active borrow record, -1 otherwise.
     int bookToReturn()
@@ -183,6 +183,53 @@ public:
         catch (runtime_error &e)
         {
             throw runtime_error("The book is not available right now for borrow");
+        }
+    }
+
+    static void borrowBook(int userId, const string &bookName)
+    {
+        User *prev = System::currPtr;
+        try
+        {
+            User *u = User::getPointer(userId);
+            if (!u)
+            {
+                throw runtime_error("User not found");
+            }
+
+            System::currPtr = u;
+
+            Book *b = nullptr;
+            try
+            {
+                b = Book::getPointer(bookName);
+            }
+            catch (...)
+            {
+                b = nullptr;
+            }
+
+            if (!b)
+            {
+                throw runtime_error("Book not found");
+            }
+
+            if (!Book::isAvailable(b->getId()))
+            {
+                throw runtime_error("Sorry, No available copies");
+            }
+
+            Borrow(System::currPtr->getId(), b->getId(), true);
+
+            Book::decreaseQuantity(b->getId());
+        }
+        catch (const exception &e)
+        {
+            throw runtime_error(e.what());
+        }
+        finally:
+        {
+            System::currPtr = prev;
         }
     }
 };
