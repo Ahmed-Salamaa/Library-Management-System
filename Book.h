@@ -153,7 +153,7 @@ class Book
             try
             {
                 Book *book = getPointer(BookId);
-                return getPointer(BookId)->quantity > 0;
+                return book->getQuantity() > 0;
             }
             catch (runtime_error &e)
             {
@@ -162,9 +162,7 @@ class Book
         }
 
         static void updateBookData(int BookId){
-            auto bookPtr = BookTable.search([&](Book* obj){
-                return obj->getId() == BookId;
-            });
+            auto bookPtr = getPointer(BookId);
             if (!bookPtr) {
                 throw runtime_error("Book not found!");
                 return;
@@ -196,18 +194,14 @@ class Book
         }
 
         static void increaseQuantity(int BookId) {
-            auto bookPtr = BookTable.search([&](Book* obj){
-                return obj->getId() == BookId;
-            });
-            bookPtr->quantity += 1;
+            auto bookPtr = getPointer(BookId);
+            bookPtr->setQuantity( bookPtr->getQuantity() + 1 );
         }
 
         static void decreaseQuantity(int BookId) {
-            auto bookPtr = BookTable.search([&](Book* obj){
-                return obj->getId() == BookId;
-            });
-            if (bookPtr->quantity > 0) {
-                bookPtr->quantity -= 1;
+            auto bookPtr = getPointer(BookId);
+            if (bookPtr->getQuantity()> 0) {
+                bookPtr->setQuantity( bookPtr->getQuantity() - 1 );
             } else {
                 throw runtime_error("Cannot decrease quantity below zero.");
             }

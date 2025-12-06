@@ -134,7 +134,7 @@ public:
       
     // @param UserId: The ID of the user to check.
     // @return: bookId if the user has at least one active borrow record, -1 otherwise.
-    int bookToReturn(int UserId)
+    int bookToReturn()
     {
         vector<Borrow *> historyOfBorrowsForAUser = searchAll(System::currPtr->getId());
         int bookId = -1;
