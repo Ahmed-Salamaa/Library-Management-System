@@ -4,8 +4,9 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-#include "System.h"
+#include "LinkedList.h"
 #include "Utilities.h"
+#include "System.h"
 
 class System;
 class User
@@ -91,7 +92,7 @@ public:
     User(int id, int type, string name, string username, string password)
         : id(id), type(type), name(name), username(username), password(password)
     {
-        if (System::systemStarted())
+        if (System::isSystemStarted())
             throw runtime_error("You cant Create a User with an setted id after system runs");
 
         UserTable.insert(this);
@@ -106,11 +107,13 @@ public:
     User(int type, string name, string username, string password)
         : id(++ID_START), type(type), name(name), username(username), password(password)
     {
-        if (!System::systemStarted())
+        if (!System::isSystemStarted())
             throw runtime_error("You cant Create a User before system runs");
 
         UserTable.insert(this);
     }
+
+    virtual ~User() {}
 
     // Overloads the << operator to output user profile information in a formatted display.
     // @param out: The output stream to write to.
@@ -134,6 +137,8 @@ public:
     // @return The ID of the user.
     int getId() const { return id; }
 
+    string getPassword() const { return password; }
+
     // Retrieves the full name of this user.
     // @return The name as a string.
     string getName() const { return name; }
@@ -156,7 +161,9 @@ public:
 
     // Displays the main menu for the user.
     // This is a virtual method to be overridden by subclasses (Student, Admin).
-    virtual void mainMenu();
+    virtual void mainMenu(){
+
+    }
 
     // Displays the user account management menu.
     // Provides options for viewing profile, changing password, and logging out.
@@ -199,6 +206,12 @@ public:
     {
         try
         {
+            cout << "\n========== Add New User ==========\n";
+
+            string typeMenu = "Select User Type";
+            vector<string> typeOptions = {"Student", "Admin"};
+            int typeChoice = Utilities::printMenu(typeMenu, typeOptions, cout);
+
             int type = Utilities::readInt(1, 2);
             string name = Utilities::readString();
             string username = Utilities::readUsername();

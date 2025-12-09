@@ -277,6 +277,7 @@ public:
         {
             string item = "  " + menu[i].first + ": " + menu[i].second;
             int padding = maxWidth - menu[i].first.size() - menu[i].second.size() - 4;
+            padding = max(padding, 0);
             out << "║" << item << string(padding, ' ') << "║\n";
         }
 

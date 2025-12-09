@@ -5,47 +5,50 @@
 using namespace std;
 
 #include "LinkedList.h"
-#include "User.h"
-#include "Book.h"
-#include "Borrow.h"
 #include "Utilities.h"
 
-class User ;
+// Forward declarations
+class User;
+class Book;
+class Student;
+class Admin;
+class Borrow;
 
 class System
 {
-    private :
+private:
+    static bool systemState;
 
-        static bool systemState ;
+public:
+    static User *currPtr;
 
-    public :
+    // Checks whether the system has been started.
+    // @return: True if the system has been initialized, false otherwise.
+    static bool isSystemStarted() { return systemState; }
 
-        static User * currPtr ;
-        
-        // Checks whether the system has been started.
-        // @return True if the system has been initialized, false otherwise.
-        static bool isSystemStarted () { return systemState ; }
+    // Starts the system (transitions from initialization to runtime mode).
+    static void Start_System()
+    {
+        if (isSystemStarted())
+            throw runtime_error("You cann't Start Started System");
 
-        static void loadData () ;
-        static void SaveData () ;
+        loadData();
+        systemState = true;
+    }
+    // Loads data from files (to be implemented)
+    static void loadData()
+    {
+        // TODO: Load data from files
+        cout << "Loading data from files...\n";
+    }
 
-        static void Start_System ()
-        {
-            if ( isSystemStarted() ) throw runtime_error( "You cann't Start Started System" ) ;
-
-            loadData () ;
-        }
-
+    // Saves data to files (to be implemented)
+    static void saveData()
+    {
+        // TODO: Save data to files
+        cout << "Saving data to files...\n";
+    }
 };
-
-int Borrow::ID_START = 1'000'000 ;
-int   User::ID_START = 1'000'000 ;
-int   Book::ID_START = 1'000'000 ;
-
-
-User * System::currPtr = nullptr ;
-bool System::systemState = false ;
-
 
 
 #endif

@@ -74,8 +74,7 @@ public:
             {
                 {"Book Title", Book::getPointer(obj.BookId)->getTitle()},
                 {"User Name", User::getPointer(obj.UserId)->getName()},
-                {"Status", to_string(obj.status)}
-            };
+                {"Status", to_string(obj.status)}};
 
         Utilities::printData(menuName, menu, out);
 
@@ -118,7 +117,7 @@ public:
     // Checks if a user has any books that need to be returned.
     // @param UserId: The ID of the user to check (currently unused, uses System::currPtr instead).
     // @return True if the user has at least one active borrow record, false otherwise.
-    bool hasAbookToReturn(int UserId)
+    static bool hasAbookToReturn(int UserId)
     {
         vector<Borrow *> historyOfBorrowsForAUser = searchAll(UserId);
         bool hasAbook = false;
@@ -135,7 +134,7 @@ public:
 
     // @param UserId: The ID of the user to check.
     // @return: bookId if the user has at least one active borrow record, -1 otherwise.
-    int bookToReturn()
+    static int bookToReturn()
     {
         vector<Borrow *> historyOfBorrowsForAUser = searchAll(System::currPtr->getId());
         int bookId = -1;
@@ -153,7 +152,7 @@ public:
     // Changes the status of a book borrow record to returned (false).
     // Note: Before using this function, call hasAbookToReturn() to verify the user has books to return.
     // @param BookId: The ID of the book being returned.
-    void changeStatusOfBookForRutern(int BookId)
+    static void changeStatusOfBookForRutern(int BookId)
     {
         vector<Borrow *> historyOfBorrowsForAUser = searchAll(System::currPtr->getId());
 
@@ -214,31 +213,20 @@ public:
             {
                 throw runtime_error("Book not found");
             }
-
-            if (!Book::isAvailable(b->getId()))
-            {
-                throw runtime_error("Sorry, No available copies");
-            }
-
-            Borrow(System::currPtr->getId(), b->getId(), true);
-
-            Book::decreaseQuantity(b->getId());
+            changeStatusOfBookForBorrow(b->getId());
         }
         catch (const exception &e)
         {
             throw runtime_error(e.what());
         }
-        finally:
-        {
-            System::currPtr = prev;
-        }
+        
     }
 
     static void GetHistoryByUser()
     {
-        int uid = System::currPtr->getId() ;
+        int uid = System::currPtr->getId();
 
-        function<bool(Borrow*)> condition = [&](Borrow* obj)
+        function<bool(Borrow *)> condition = [&](Borrow *obj)
         {
             return obj->getUserId() == uid;
         };

@@ -7,7 +7,7 @@ using namespace std;
 #include "System.h"
 #include "Utilities.h"
 
-class System ;
+class System;
 class Book
 {
 private:
@@ -163,9 +163,9 @@ public:
         }
     }
 
-    static void updateBookData(int BookId)
+    static void updateBookData(string BookTitle)
     {
-        auto bookPtr = getPointer(BookId);
+        auto bookPtr = getPointer(BookTitle);
 
         if (!bookPtr)
         {
@@ -279,28 +279,36 @@ public:
 
     static void printAllBooks()
     {
+        vector<Book *> all;
+
         try
         {
-            vector<Book *> all = Book::getAll();
-            if (all.empty())
-            {
-                throw runtime_error("No books in catalog");
-            }
-
-            for (auto b : all)
-            {
-                cout << *b << "\n";
-            }
+            all = Book::getAll();
         }
-        catch (const exception &e)
+        catch (...)
         {
-            throw runtime_error("Failed to retrieve books");
+            cout << "Error: Could not read book list.\n";
+            return;
+        }
+
+        if (all.empty())
+        {
+            cout << "No books in catalog.\n";
+            return;
+        }
+
+        for (auto b : all)
+        {
+            if (b)
+                cout << *b << "\n";
+            else
+                cout << "Error: Invalid book entry.\n";
         }
     }
 
     static void viewBooks(string author)
     {
-        function<bool(Book*)> condition = [&](Book* obj)
+        function<bool(Book *)> condition = [&](Book *obj)
         {
             return obj->getAuthor() == author;
         };
@@ -325,24 +333,24 @@ public:
 
         try
         {
-            name = Utilities::readString() ;
+            name = Utilities::readString();
         }
         catch (...)
         {
-            return ; // if user refuses to give input return
+            return; // if user refuses to give input return
         }
-        
-        function<bool(Book*)> condition = [&](Book* obj)
+
+        function<bool(Book *)> condition = [&](Book *obj)
         {
             return obj->getTitle() == name;
         };
 
-        Book* p = BookTable.search(condition);
+        Book *p = BookTable.search(condition);
 
         if (!p)
             cout << "Book not found.\n";
         else
-            cout << *p;     // prints full book info
+            cout << *p; // prints full book info
     }
 };
 
