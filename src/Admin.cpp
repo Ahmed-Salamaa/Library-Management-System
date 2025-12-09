@@ -152,10 +152,10 @@ void Admin::adminUpdateUserPassword()
 
     try
     {
-        cout << "Enter user ID: ";
-        int userId = Utilities::readInt(cin, cout);
+        cout << "Enter user's username : ";
+        string username = Utilities::readString(cin, cout);
 
-        User::updateUserPassword(userId);
+        User::updateUserPassword(username);
     }
     catch (runtime_error &e)
     {
@@ -169,10 +169,10 @@ void Admin::adminDeleteUser()
 
     try
     {
-        cout << "Enter user ID to delete: ";
-        int userId = Utilities::readInt(cin, cout);
+        cout << "Enter user's username to delete: ";
+        string username = Utilities::readString(cin, cout);
 
-        User *user = User::getPointer(userId);
+        User *user = User::getPointer(username);
 
         if (!user)
         {
@@ -192,7 +192,7 @@ void Admin::adminDeleteUser()
 
         if (confirm == "yes" || confirm == "YES")
         {
-            User::deleteUser(userId);
+            User::deleteUser(username);
             cout << "✓ User deleted successfully!\n";
         }
         else
@@ -212,10 +212,10 @@ void Admin::adminPrintUser()
 
     try
     {
-        cout << "Enter user ID: ";
-        int userId = Utilities::readInt(cin, cout);
+        cout << "Enter user's username: ";
+        string username = Utilities::readString(cin, cout);
 
-        User::printUser(userId);
+        User::printUser(username);
     }
     catch (runtime_error &e)
     {

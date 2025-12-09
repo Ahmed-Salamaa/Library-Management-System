@@ -45,7 +45,7 @@ public:
     // Deletes a User object from the user table using their ID.
     // @param id: The ID of the user to delete.
     // @throws runtime_error: If no user with the given ID exists.
-    static void deleteUser(int id) ;
+    static void deleteUser(string username) ;
 
     // Initializes a User object with a predefined ID (used during system initialization).
     // @param id: The unique identifier for the user (must be set before system starts).
@@ -109,11 +109,11 @@ public:
     // Implementation in main.cpp to avoid circular dependency
     static void addUser() ;
 
-    static void updateUserPassword(int id) ;
+    static void updateUserPassword(string username) ;
 
     void changeCurrentUserPassword() ;
 
-    static void printUser(int Id) ;
+    static void printUser(string username) ;
 
     static void PrintAllUsers() ;
 };

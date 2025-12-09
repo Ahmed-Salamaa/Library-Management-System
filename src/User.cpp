@@ -50,14 +50,14 @@ void User::deleteUser(User *ptr)
 }
 
 // Deletes a User object from the user table using their ID.
-void User::deleteUser(int id)
+void User::deleteUser(string username)
 {
-    User *ptr = getPointer(id);
+    User *ptr = getPointer(username);
 
     if (ptr)
         deleteUser(ptr);
     else
-        throw runtime_error("Cannot delete user: No user found with ID " + to_string(id));
+        throw runtime_error("Cannot delete user: No user found with username " + username);
 }
 
 // Initializes a User object with a predefined ID (used during system initialization).
@@ -153,9 +153,9 @@ void User::userMenu()
     }
 }
 
-void User::updateUserPassword(int id)
+void User::updateUserPassword(string username)
 {
-    User *ptr = getPointer(id);
+    User *ptr = getPointer(username);
     if (!ptr)
     {
         throw runtime_error("User not found.");
@@ -163,16 +163,16 @@ void User::updateUserPassword(int id)
     Utilities::setPassword(ptr->password);
 }
 
-void User::printUser(int Id)
+void User::printUser(string username)
 {
     try
     {
-        User *p = User::getPointer(Id);
+        User *p = User::getPointer(username);
         cout << *p;
     }
     catch (...)
     {
-        cout << "Error: User with ID " << Id << " doesn't exist!" << endl;
+        cout << "Error: User with username " << username << " doesn't exist!" << endl;
     }
 }
 
