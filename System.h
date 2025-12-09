@@ -24,7 +24,17 @@ class System
         
         // Checks whether the system has been started.
         // @return True if the system has been initialized, false otherwise.
-        static bool systemStarted () { return systemState ; }
+        static bool isSystemStarted () { return systemState ; }
+
+        static void loadData () ;
+        static void SaveData () ;
+
+        static void Start_System ()
+        {
+            if ( isSystemStarted() ) throw runtime_error( "You cann't Start Started System" ) ;
+
+            loadData () ;
+        }
 
 };
 

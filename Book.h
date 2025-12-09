@@ -86,7 +86,7 @@ public:
     Book(int id, int quantity, const string &title, const string &author)
         : id(id), quantity(quantity), title(title), author(author)
     {
-        if (System::systemStarted())
+        if (System::isSystemStarted())
             throw runtime_error("You cant Create a User with an setted id after system runs");
 
         BookTable.insert(this);
@@ -100,7 +100,7 @@ public:
     Book(int quantity, const string &title, const string &author)
         : id(++ID_START), quantity(quantity), title(title), author(author)
     {
-        if (!System::systemStarted())
+        if (!System::isSystemStarted())
             throw runtime_error("You cant Create a User before system runs");
 
         BookTable.insert(this);
@@ -296,6 +296,53 @@ public:
         {
             throw runtime_error("Failed to retrieve books");
         }
+    }
+
+    static void viewBooks(string author)
+    {
+        function<bool(Book*)> condition = [&](Book* obj)
+        {
+            return obj->getAuthor() == author;
+        };
+
+        auto books = BookTable.searchAllByPredicate(condition);
+
+        if (books.empty())
+        {
+            cout << "No books found for author: " << author << "\n";
+            return;
+        }
+
+        cout << "\n--- Books by Author: " << author << " ---\n";
+        for (auto b : books)
+            cout << *b;
+    }
+
+    void PrintBookByName()
+    {
+        string name;
+        cout << "Enter Book Name: ";
+
+        try
+        {
+            name = Utilities::readString() ;
+        }
+        catch (...)
+        {
+            return ; // if user refuses to give input return
+        }
+        
+        function<bool(Book*)> condition = [&](Book* obj)
+        {
+            return obj->getTitle() == name;
+        };
+
+        Book* p = BookTable.search(condition);
+
+        if (!p)
+            cout << "Book not found.\n";
+        else
+            cout << *p;     // prints full book info
     }
 };
 

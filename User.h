@@ -94,7 +94,7 @@ class User
         User ( int id , int type , string name , string username , string password )
             : id ( id ) , type ( type ) , name ( name ) , username ( username ) , password ( password ) 
         {
-            if ( System::systemStarted() )
+            if ( System::isSystemStarted() )
                 throw runtime_error( "You cant Create a User with an setted id after system runs" ) ;
 
             UserTable.insert( this ) ;
@@ -109,7 +109,7 @@ class User
         User ( int type , string name , string username, string password )
             : id ( ++ ID_START ) , type ( type ) , name ( name ) , username ( username ) , password ( password ) 
         {
-            if ( !System::systemStarted() )
+            if ( !System::isSystemStarted() )
                 throw runtime_error( "You cant Create a User before system runs" ) ;
 
             UserTable.insert( this ) ;
