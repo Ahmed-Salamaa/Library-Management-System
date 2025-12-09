@@ -43,7 +43,7 @@ public:
     Borrow(int id, int UserId, int BookId, bool status)
         : id(id), UserId(UserId), BookId(BookId), status(status)
     {
-        if (System::systemStarted())
+        if (System::isSystemStarted())
             throw runtime_error("You cant Create a Borrow object with an setted id after system runs");
 
         BorrowTable.insert(this);
@@ -57,7 +57,7 @@ public:
     Borrow(int UserId, int BookId, bool status)
         : id(++ID_START), UserId(UserId), BookId(BookId), status(status)
     {
-        if (!System::systemStarted())
+        if (!System::isSystemStarted())
             throw runtime_error("You cant Create a Borrow object before system runs");
 
         BorrowTable.insert(this);
@@ -232,6 +232,29 @@ public:
         {
             System::currPtr = prev;
         }
+    }
+
+    static void GetHistoryByUser()
+    {
+        int uid = System::currPtr->getId() ;
+
+        function<bool(Borrow*)> condition = [&](Borrow* obj)
+        {
+            return obj->getUserId() == uid;
+        };
+
+        auto records = BorrowTable.searchAllByPredicate(condition);
+
+        if (records.empty())
+        {
+            cout << "No borrowing history for this user.\n";
+            return;
+        }
+
+        cout << "\n--- Borrow History for User " << uid << " ---\n";
+
+        for (auto r : records)
+            cout << *r; // Borrow operator<< prints userID, bookID, date
     }
 };
 
