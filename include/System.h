@@ -27,28 +27,24 @@ public:
     static bool isSystemStarted() { return systemState; }
 
     // Starts the system (transitions from initialization to runtime mode).
-    static void Start_System()
-    {
-        if (isSystemStarted())
-            throw runtime_error("You cann't Start Started System");
-
-        loadData();
-        systemState = true;
-    }
+    static void Start_System();
+    
     // Loads data from files (to be implemented)
-    static void loadData()
-    {
-        // TODO: Load data from files
-        cout << "Loading data from files...\n";
-    }
+    static void loadData();
 
     // Saves data to files (to be implemented)
-    static void saveData()
-    {
-        // TODO: Save data to files
-        cout << "Saving data to files...\n";
-    }
-};
+    static void saveData();
 
+    // Handles the login process for users.
+    // @return: A pointer to the logged-in User object, or nullptr if login is cancelled.
+    static User * login();
+
+    // Handles the signup process for new users.
+    // @return: A pointer to the newly created User object, or nullptr if signup fails.
+    static User * signup();
+
+    // Displays the main menu before login and handles user authentication.
+    static void mainMenu();
+};
 
 #endif
