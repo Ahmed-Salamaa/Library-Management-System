@@ -19,6 +19,10 @@ private:
     string title;
     string author;
 
+    string toCSV() ;
+    static void fromCSV( const string& line ) ;
+    friend class DataManager;
+
 public:
     // Retrieves a pointer to a Book object by its ID.
     // @param id: The ID of the book to search for.

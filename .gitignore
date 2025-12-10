@@ -4,3 +4,4 @@
 *.exe
 ForTest*
 /ForTest/
+/data/
