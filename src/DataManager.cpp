@@ -9,7 +9,11 @@
 #include "../include/DataManager.h"
 
 // Define the static member
-const string DataManager::DATA_PATH = string("data") + filesystem::path::preferred_separator;
+#ifdef _WIN32
+    const string DataManager::DATA_PATH = "data\\";
+#else
+    const string DataManager::DATA_PATH = "data/";
+#endif
 
 // Save functions
 template < typename t >
