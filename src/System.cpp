@@ -9,6 +9,7 @@ using namespace std;
 #include "../include/Borrow.h"
 #include "../include/Student.h"
 #include "../include/Admin.h"
+#include "../include/DataManager.h"
 
 // Static member definitions
 User *System::currPtr = nullptr;
@@ -19,18 +20,21 @@ void System::Start_System()
     if (isSystemStarted())
         throw runtime_error("You cann't Start Started System");
 
-    loadData();
+    try
+    {
+        DataManager::loadData();
+    }
+    catch(const exception& e)
+    {
+        if ( string(e.what()) == "Fail to load" ) 
+        {
+            systemState = true;
+            DataManager::loadInitialData() ;
+        }
+        else throw ;
+    }
+
     systemState = true;
-}
-
-void System::loadData()
-{
-    cout << "Loading data from files...\n";
-}
-
-void System::saveData()
-{
-    cout << "Saving data to files...\n";
 }
 
 User *System::login()
@@ -188,4 +192,9 @@ void System::mainMenu()
             }
         }
     }
+}
+
+void System::End_System ()
+{
+    DataManager::saveData() ;
 }

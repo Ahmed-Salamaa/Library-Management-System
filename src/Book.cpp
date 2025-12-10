@@ -5,10 +5,44 @@ using namespace std;
 #include "../include/Utilities.h"
 #include "../include/System.h"
 #include "../include/Book.h"
+#include "../include/DataManager.h"
 
 // Static member definitions
 LinkedList<Book *> Book::BookTable;
 int Book::ID_START = 2000000;
+
+string Book::toCSV()
+{
+    stringstream ss;
+
+    ss << id << DELIM
+       << quantity << DELIM
+       << title << DELIM
+       << author ;
+
+    return ss.str() ;
+}
+
+void Book::fromCSV( const string& line )
+{
+    stringstream ss (line) ;
+
+    string token ;
+
+    getline(ss, token, DELIM) ;
+    int id = stoi( token ) ;
+
+    getline(ss, token, DELIM) ;
+    int quantity = stoi( token ) ;
+
+    getline(ss, token, DELIM) ;
+    string title = token ;
+
+    getline(ss, token, DELIM) ;
+    string author = token ;
+
+    new Book ( id , quantity , title , author ) ;
+}
 
 Book *Book::getPointer(int id)
 {

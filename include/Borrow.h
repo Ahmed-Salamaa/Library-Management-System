@@ -7,6 +7,7 @@ using namespace std;
 #include "System.h"
 #include "Book.h"
 #include "User.h"
+#include "DataManager.h"
 
 class Borrow
 {
@@ -18,6 +19,11 @@ private:
     const int UserId;
     const int BookId;
     bool status;
+
+    string toCSV() ;
+    static void fromCSV( const string& line ) ;
+    friend class DataManager;
+
 
 public:
     // Retrieves a pointer to a Borrow object by its ID.

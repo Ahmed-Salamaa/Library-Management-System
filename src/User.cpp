@@ -7,11 +7,50 @@ using namespace std;
 #include "../include/User.h"
 #include "../include/Student.h"
 #include "../include/Admin.h"
+#include "../include/DataManager.h"
 
 // Static member definitions
 LinkedList<User *> User::UserTable;
 int User::ID_START = 1000000;
 
+string User::toCSV()
+{
+    stringstream ss;
+
+    ss << id << DELIM
+       << type << DELIM
+       << name << DELIM
+       << username << DELIM
+       << password ;
+
+    return ss.str() ;
+}
+
+void User::fromCSV( const string& line )
+{
+    stringstream ss (line) ;
+
+    string token ;
+
+    getline(ss, token, DELIM) ;
+    int id = stoi( token ) ;
+
+    getline(ss, token, DELIM) ;
+    int type = stoi( token ) ;
+
+    getline(ss, token, DELIM) ;
+    string name = token ;
+
+    getline(ss, token, DELIM) ;
+    string username = token ;
+
+    getline(ss, token, DELIM) ;
+    string password = token ;
+
+    if ( type == 1 ) new Student ( id , name , username , password ) ;
+    else if ( type == 2 ) new Admin ( id , name , username , password ) ;
+    else throw runtime_error( "Invaild data" ) ;
+}
 
 // Retrieves a pointer to a User object by its ID.
 User *User::getPointer(int id)

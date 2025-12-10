@@ -7,10 +7,44 @@ using namespace std;
 #include "../include/User.h"
 #include "../include/Book.h"
 #include "../include/Borrow.h"
+#include "../include/DataManager.h"
 
 // Static member definitions
 LinkedList<Borrow *> Borrow::BorrowTable;
 int Borrow::ID_START = 3000000;
+
+string Borrow::toCSV()
+{
+    stringstream ss;
+
+    ss << id << DELIM
+       << UserId << DELIM
+       << BookId << DELIM
+       << ( status ? 1 : 0 ) ;
+
+    return ss.str() ;
+}
+
+void Borrow::fromCSV( const string& line )
+{
+    stringstream ss (line) ;
+
+    string token ;
+
+    getline(ss, token, DELIM) ;
+    int id = stoi( token ) ;
+
+    getline(ss, token, DELIM) ;
+    int UserId = stoi( token ) ;
+
+    getline(ss, token, DELIM) ;
+    int BookId = stoi( token ) ;
+
+    getline(ss, token, DELIM) ;
+    bool status = stoi( token ) ;
+
+    new Borrow ( id , UserId , BookId , status ) ;
+}
 
 Borrow *Borrow::getPointer(int id)
 {

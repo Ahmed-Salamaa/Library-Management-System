@@ -6,6 +6,7 @@ using namespace std;
 
 #include "LinkedList.h"
 #include "Utilities.h"
+#include "DataManager.h"
 
 // Forward declarations
 class User;
@@ -28,12 +29,8 @@ public:
 
     // Starts the system (transitions from initialization to runtime mode).
     static void Start_System();
-    
-    // Loads data from files (to be implemented)
-    static void loadData();
 
-    // Saves data to files (to be implemented)
-    static void saveData();
+    static void End_System();
 
     // Handles the login process for users.
     // @return: A pointer to the logged-in User object, or nullptr if login is cancelled.

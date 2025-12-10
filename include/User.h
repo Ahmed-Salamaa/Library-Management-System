@@ -7,6 +7,8 @@ using namespace std;
 #include "LinkedList.h"
 #include "Utilities.h"
 #include "System.h"
+#include "DataManager.h"
+
 
 class System;
 class User
@@ -14,6 +16,10 @@ class User
 private:
     static LinkedList<User *> UserTable;
     static int ID_START;
+
+    string toCSV() ;
+    static void fromCSV( const string& line ) ;
+    friend class DataManager;
 
 protected:
     const int id;
