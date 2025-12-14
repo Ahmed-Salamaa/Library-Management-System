@@ -139,7 +139,7 @@ void Student::studentReturnBook()
             if (confirm == "yes" || confirm == "YES")
             {
                 Borrow::changeStatusOfBookForRutern(bookId);
-                cout << "✓ Book returned successfully!\n";
+                cout << "Book returned successfully!\n";
             }
             else
             {
@@ -168,7 +168,7 @@ void Student::studentBorrowBook()
         string title = Utilities::readString(cin, cout);
 
         Borrow::borrowBook(System::currPtr->getId(), title);
-        cout << "✓ Book borrowed successfully!\n";
+        cout << "Book borrowed successfully!\n";
     }
     catch (runtime_error &e)
     {

@@ -60,7 +60,7 @@ User *System::login()
 
             if (user && user->getPassword() == password)
             {
-                cout << "\n✓ Login successful!\n";
+                cout << "\nLogin successful!\n";
                 cout << "Welcome, " << user->getName() << "!\n";
                 return user;
             }
@@ -117,7 +117,7 @@ User *System::signup()
         string password = Utilities::readPassword();
 
         User *newUser = new Student(name, username, password);
-        cout << "✓ User created successfully!\n";
+        cout << "User created successfully!\n";
         return newUser;
     }
     catch (const runtime_error &e)
@@ -157,7 +157,7 @@ void System::mainMenu()
                 {
                     System::currPtr = loggedInUser;
                     currPtr->mainMenu();
-                    cout << "\n✓ Logged out successfully.\n";
+                    cout << "\nLogged out successfully.\n";
                 }
             }
             else if (choice == 2)
