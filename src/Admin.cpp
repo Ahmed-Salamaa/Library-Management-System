@@ -124,12 +124,12 @@ void Admin::adminAddUser()
         if (userType == 1)
         {
             newUser = new Student(name, username, password);
-            cout << "✓ Student created successfully!\n";
+            cout << "Student created successfully!\n";
         }
         else
         {
             newUser = new Admin(name, username, password);
-            cout << "✓ Admin created successfully!\n";
+            cout << "Admin created successfully!\n";
         }
     }
     catch (const runtime_error &e)
@@ -193,7 +193,7 @@ void Admin::adminDeleteUser()
         if (confirm == "yes" || confirm == "YES")
         {
             User::deleteUser(username);
-            cout << "✓ User deleted successfully!\n";
+            cout << "User deleted successfully!\n";
         }
         else
         {
@@ -239,7 +239,7 @@ void Admin::adminAddBook()
         int quantity = Utilities::readInt(1, 1000, cin, cout);
 
         Book::addBook(title, author, quantity);
-        cout << "✓ Book added successfully!\n";
+        cout << "Book added successfully!\n";
     }
     catch (runtime_error &e)
     {
@@ -271,7 +271,7 @@ void Admin::adminDeleteBook()
         if (confirm == "yes" || confirm == "YES")
         {
             Book::deleteBook(bookId);
-            cout << "✓ Book deleted successfully!\n";
+            cout << "Book deleted successfully!\n";
         }
         else
         {
