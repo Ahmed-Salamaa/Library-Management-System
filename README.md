@@ -42,7 +42,6 @@ Library-Management-System/
 │   ├── Book.cpp
 │   ├── Borrow.cpp
 │   ├── DataManager.cpp
-│   ├── LinkedList.cpp
 │   ├── Student.cpp
 │   ├── System.cpp
 │   ├── User.cpp
@@ -77,7 +76,7 @@ g++ -o output/library main.cpp src/*.cpp -std=c++17 -I.
 cd Library-Management-System
 
 :: Compile the project (list all source files explicitly)
-g++ -o output\library.exe main.cpp src\Admin.cpp src\Book.cpp src\Borrow.cpp src\DataManager.cpp src\LinkedList.cpp src\Student.cpp src\System.cpp src\User.cpp src\Utilities.cpp -std=c++17 -I.
+g++ -o output\library.exe main.cpp src\Admin.cpp src\Book.cpp src\Borrow.cpp src\DataManager.cpp src\Student.cpp src\System.cpp src\User.cpp src\Utilities.cpp -std=c++17 -I.
 
 :: Run the application
 output\library.exe
