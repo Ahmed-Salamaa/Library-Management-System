@@ -187,23 +187,23 @@ int Utilities::printMenu(const string &menuName, const vector<string> &menu, ost
     maxWidth += 4;
     string horizontalLine(maxWidth, '=');
 
-    out << "\n╔" << horizontalLine << "╗\n";
+    out << "\n " << horizontalLine << " \n";
 
     int leftPad = (maxWidth - menuName.size()) / 2;
     int rightPad = maxWidth - menuName.size() - leftPad;
-    out << "║" << string(leftPad, ' ') << menuName << string(rightPad, ' ') << "║\n";
+    out << "|" << string(leftPad, ' ') << menuName << string(rightPad, ' ') << "|\n";
 
-    out << "╠" << horizontalLine << "╣\n";
+    out << " " << horizontalLine << " \n";
 
     for (int i = 0; i < (int)(menu.size()); i++)
     {
         string item = "  " + to_string(i + 1) + ". " + menu[i];
         int padding = maxWidth - item.size();
         padding = max(0, padding);
-        out << "║" << item << string(padding, ' ') << "║\n";
+        out << "|" << item << string(padding, ' ') << "|\n";
     }
 
-    out << "╚" << horizontalLine << "╝\n";
+    out << " " << horizontalLine << " \n";
 
     out << "Enter your choice (or 'exit' to quit) : ";
     return readInt(1, menu.size());
@@ -222,23 +222,23 @@ void Utilities::printData(const string &menuName, const vector<pair<string, stri
     maxWidth += 6;
     string horizontalLine(maxWidth, '=');
 
-    out << "\n╔" << horizontalLine << "╗\n";
+    out << "\n " << horizontalLine << " \n";
 
     int leftPad = (maxWidth - menuName.size()) / 2;
     int rightPad = maxWidth - menuName.size() - leftPad;
-    out << "║" << string(leftPad, ' ') << menuName << string(rightPad, ' ') << "║\n";
+    out << "|" << string(leftPad, ' ') << menuName << string(rightPad, ' ') << "|\n";
 
-    out << "╠" << horizontalLine << "╣\n";
+    out << " " << horizontalLine << " \n";
 
     for (int i = 0; i < (int)(menu.size()); i++)
     {
         string item = "  " + menu[i].first + ": " + menu[i].second;
         int padding = maxWidth - menu[i].first.size() - menu[i].second.size() - 4;
         padding = max(0, padding);
-        out << "║" << item << string(padding, ' ') << "║\n";
+        out << "|" << item << string(padding, ' ') << "|\n";
     }
 
-    out << "╚" << horizontalLine << "╝\n";
+    out << " " << horizontalLine << " \n";
 }
 
 void Utilities::printData(const vector<string> &menu, ostream &out)
@@ -254,17 +254,17 @@ void Utilities::printData(const vector<string> &menu, ostream &out)
     maxWidth += 6;
     string horizontalLine(maxWidth, '=');
 
-    out << "\n╔" << horizontalLine << "╗\n";
+    out << "\n " << horizontalLine << " \n";
 
     for (int i = 0; i < (int)(menu.size()); i++)
     {
         string item = "  " + menu[i];
         int padding = maxWidth - menu[i].size() - 2;
         padding = max(0, padding);
-        out << "║" << item << string(padding, ' ') << "║\n";
+        out << "|" << item << string(padding, ' ') << "|\n";
     }
 
-    out << "╚" << horizontalLine << "╝\n";
+    out << " " << horizontalLine << " \n";
 }
 
 void Utilities::printData(const string &menuName, ostream &out)
@@ -274,13 +274,13 @@ void Utilities::printData(const string &menuName, ostream &out)
     maxWidth += 6;
     string horizontalLine(maxWidth, '=');
 
-    out << "\n╔" << horizontalLine << "╗\n";
+    out << "\n " << horizontalLine << " \n";
 
     int leftPad = (maxWidth - menuName.size()) / 2;
     int rightPad = maxWidth - menuName.size() - leftPad;
-    out << "║" << string(leftPad, ' ') << menuName << string(rightPad, ' ') << "║\n";
+    out << "|" << string(leftPad, ' ') << menuName << string(rightPad, ' ') << "|\n";
 
-    out << "╚" << horizontalLine << "╝\n";
+    out << " " << horizontalLine << " \n";
 }
 
 void Utilities::setPassword(string &password, istream &in, ostream &out)
